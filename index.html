@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CCBA Photo Import Tracker</title>
+  <title>CCBA Championship Tracker</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #0f172a; }
@@ -25,6 +25,13 @@
     .layout { margin-top:24px; display:grid; grid-template-columns:420px 1fr; gap:24px; align-items:start; }
     .main-column { display:grid; gap:24px; }
     .card { background:white; border:1px solid #e2e8f0; border-radius:22px; padding:16px; box-shadow:0 8px 24px rgba(15,23,42,.06); }
+    .dropdown-card { padding:0; overflow:hidden; }
+    .dropdown-header { width:100%; border:0; background:white; color:#0f172a; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; font-weight:900; text-align:left; }
+    .dropdown-header:hover { background:#f8fafc; }
+    .dropdown-header span:first-child { display:flex; align-items:center; gap:10px; font-size:22px; }
+    .dropdown-content { display:none; padding:0 16px 16px; }
+    .dropdown-card.open .dropdown-content { display:block; }
+    .dropdown-arrow { color:#64748b; font-size:18px; }
     .form-card { display:grid; gap:18px; }
     .section-title { display:flex; align-items:center; gap:10px; }
     .section-title h2, .database-header h2 { margin:0; font-size:24px; font-weight:900; }
@@ -100,7 +107,7 @@
       <section class="hero">
         <div>
           <p class="pill">🏆 Cole's College Basketball Association</p>
-          <h1>CCBA Photo Import Tracker</h1>
+          <h1>CCBA Championship Tracker</h1>
           <p class="hero-text">Upload bracket photos, type in the winners and awards, then build your official CCBA history database.</p>
           <div class="nav-tabs">
             <button class="nav-tab active" id="homeTab" onclick="showPage('home')">Championships</button>
@@ -116,8 +123,9 @@
 
       <section id="homePage" class="app-page active">
       <section class="layout">
-        <aside class="card form-card">
-          <div class="section-title"><span>📷</span><h2>Import Bracket Photo</h2></div>
+        <aside class="card form-card dropdown-card open" id="championshipInputSection">
+          <button class="dropdown-header" onclick="toggleSection('championshipInputSection')"><span>📷 Championship Input</span><span class="dropdown-arrow">▼</span></button>
+          <div class="dropdown-content">
           <label class="upload-box">
             <span class="upload-icon">📸</span>
             <strong>Upload a bracket or winners photo</strong>
@@ -138,16 +146,50 @@
           </div>
           <label class="field"><span>Notes</span><textarea id="notes" placeholder="Add upset, rivalry, transfer, or dynasty notes..."></textarea></label>
           <div class="button-row"><button class="primary-button" id="saveBtn">➕ Add Season</button><button class="secondary-button" id="clearBtn">Clear</button></div>
+          </div>
         </aside>
 
         <section class="main-column">
-          <div class="card">
-            <div class="database-header"><div><h2>CCBA Season Database</h2><p>Search champions, awards, years, eras, and notes.</p></div><input id="search" class="search-input" placeholder="Search CCBA history..."></div>
-            <div class="table"><div class="table-head"><span>Year</span><span>Era</span><span>Champ</span><span>Runner-Up</span><span>MVP</span><span>SMVP</span><span>TMVP</span><span>Actions</span></div><div id="records"></div></div>
+          <div class="card dropdown-card open" id="seasonDatabaseSection">
+            <button class="dropdown-header" onclick="toggleSection('seasonDatabaseSection')"><span>📚 CCBA Season Database</span><span class="dropdown-arrow">▼</span></button>
+            <div class="dropdown-content">
+              <div class="database-header"><div><h2>CCBA Season Database</h2><p>Search champions, awards, years, eras, and notes.</p></div><input id="search" class="search-input" placeholder="Search CCBA history..."></div>
+              <div class="table"><div class="table-head"><span>Year</span><span>Era</span><span>Champ</span><span>Runner-Up</span><span>MVP</span><span>SMVP</span><span>TMVP</span><span>Actions</span></div><div id="records"></div></div>
+            </div>
           </div>
           <div class="bottom-grid">
-            <div class="card"><div class="section-title"><span>👑</span><h2>Championship Leaders</h2></div><div id="leaders" class="leader-list"></div></div>
-            <div class="card"><div class="section-title"><span>🏅</span><h2>Official CCBA Rules</h2></div><ul class="rules-list"><li><b>Era Rule:</b> Every era lasts 3 seasons.</li><li><b>Game Format:</b> All games are 1-v-1.</li><li><b>International Rule:</b> International teams play each other in the first round.</li><li><b>Eligibility:</b> Every player gets 4 years of eligibility.</li></ul></div>
+            <div class="card dropdown-card" id="championshipLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('championshipLeadersSection')"><span>👑 Championship Leaders</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="leaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="runnerUpLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('runnerUpLeadersSection')"><span>🥈 Runner-Up Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="runnerUpLeaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="mvpLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('mvpLeadersSection')"><span>⭐ MVP Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="mvpLeaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="smvpLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('smvpLeadersSection')"><span>🎯 SMVP Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="smvpLeaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="tmvpLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('tmvpLeadersSection')"><span>🦒 TMVP Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="tmvpLeaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="dmvpLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('dmvpLeadersSection')"><span>🛡️ DMVP Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="dmvpLeaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="cmvpLeadersSection">
+              <button class="dropdown-header" onclick="toggleSection('cmvpLeadersSection')"><span>🔥 CMVP Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><div id="cmvpLeaders" class="leader-list"></div></div>
+            </div>
+            <div class="card dropdown-card" id="rulesSection">
+              <button class="dropdown-header" onclick="toggleSection('rulesSection')"><span>🏅 Official CCBA Rules</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content"><ul class="rules-list"><li><b>Era Rule:</b> Every era lasts 3 seasons.</li><li><b>Game Format:</b> All games are 1-v-1.</li><li><b>International Rule:</b> International teams play each other in the first round.</li><li><b>Eligibility:</b> Every player gets 4 years of eligibility.</li></ul></div>
+            </div>
           </div>
         </section>
       </section>
@@ -214,6 +256,11 @@
       $('bracketTab').classList.toggle('active', page === 'bracket');
     }
 
+    window.toggleSection = function(id){
+      const section = $(id);
+      if(section) section.classList.toggle('open');
+    }
+
     window.chooseBracketSize = function(size){
       bracketSize = size;
       [8,16,64].forEach(n => $('size' + n).classList.toggle('active', n === size));
@@ -239,23 +286,44 @@
       return shuffled;
     }
 
+    function getSeedOrder(size){
+      const regionSize = size === 64 ? 16 : size;
+      const regionCount = size === 64 ? 4 : 1;
+      const order = [];
+      for(let region = 1; region <= regionCount; region++){
+        for(let seed = 1; seed <= regionSize / 2; seed++){
+          order.push({ seed, region });
+          order.push({ seed: regionSize + 1 - seed, region });
+        }
+      }
+      return order;
+    }
+
+    function makeSeededBracket(names){
+      const seedOrder = getSeedOrder(bracketSize);
+      return seedOrder.map((slot, index) => ({
+        id: `${slot.region}-${slot.seed}-${index}`,
+        seed: slot.seed,
+        region: slot.region,
+        name: names[index] || `Team ${index + 1}`
+      }));
+    }
+
     window.autoFillBracket = function(){
-      bracketTeams = shuffleTeams(ncaaTeams)
-        .slice(0, bracketSize)
-        .map((name, index) => ({ seed: index + 1, name }));
+      const names = shuffleTeams(ncaaTeams).slice(0, bracketSize);
+      bracketTeams = makeSeededBracket(names);
       createBracket(bracketTeams);
     }
 
     window.showManualFill = function(){
       $('manualArea').style.display = 'block';
-      $('manualInputs').innerHTML = Array.from({length: bracketSize}, (_, i) => `<input id="manualTeam${i}" placeholder="Seed ${i + 1} team name">`).join('');
+      const seedOrder = getSeedOrder(bracketSize);
+      $('manualInputs').innerHTML = seedOrder.map((slot, i) => `<input id="manualTeam${i}" placeholder="${bracketSize === 64 ? 'Region ' + slot.region + ' - ' : ''}Seed ${slot.seed} team name">`).join('');
     }
 
     window.buildManualBracket = function(){
-      bracketTeams = Array.from({length: bracketSize}, (_, i) => ({
-        seed: i + 1,
-        name: $('manualTeam' + i).value.trim() || `Team ${i + 1}`
-      }));
+      const names = Array.from({length: bracketSize}, (_, i) => $('manualTeam' + i).value.trim() || `Team ${i + 1}`);
+      bracketTeams = makeSeededBracket(names);
       createBracket(bracketTeams);
     }
 
@@ -308,7 +376,7 @@
     }
 
     function sameTeam(a, b){
-      return a && b && a.seed === b.seed && a.name === b.name;
+      return a && b && a.id === b.id;
     }
 
     function renderBracket(){
@@ -338,6 +406,19 @@
     function getForm(){ const obj = {}; ids.forEach(id => obj[id] = $(id).value); obj.image = currentPhoto; return obj; }
     function setForm(r){ ids.forEach(id => $(id).value = r[id] || ''); currentPhoto = r.image || null; $('previewBox').style.display = currentPhoto ? 'block' : 'none'; if(currentPhoto) $('photoPreview').src = currentPhoto; $('photoName').textContent = currentPhoto ? 'Saved bracket photo' : ''; }
     function clearForm(){ setForm({year:'2069', era:'Global Era', teamCount:'16 Team'}); editingId = null; $('saveBtn').textContent = '➕ Add Season'; }
+
+    function countField(field){
+      const counts = {};
+      records.forEach(r => {
+        const value = cleanTeamName(r[field]);
+        if(value) counts[value] = (counts[value] || 0) + 1;
+      });
+      return Object.entries(counts).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]));
+    }
+
+    function renderLeaders(targetId, entries, label){
+      $(targetId).innerHTML = entries.length ? entries.map(([team,total],i)=>`<div class="leader"><span class="rank">${i+1}</span><strong>${team}</strong><b>${total} ${label}${total===1?'':'s'}</b></div>`).join('') : '<p>No data yet.</p>';
+    }
 
     function render(){
       const q = $('search').value.toLowerCase().trim();
@@ -382,7 +463,13 @@ records.forEach(r => {
           </div>
         </article>`).join('') : '<div class="empty-state">No seasons match your search.</div>';
 
-      $('leaders').innerHTML = champs.length ? champs.map(([team,total],i)=>`<div class="leader"><span class="rank">${i+1}</span><strong>${team}</strong><b>${total} title${total===1?'':'s'}</b></div>`).join('') : '<p>No champions yet.</p>';
+      renderLeaders('leaders', champs, 'title');
+      renderLeaders('runnerUpLeaders', countField('runnerUp'), 'runner-up finish');
+      renderLeaders('mvpLeaders', countField('mvp'), 'MVP');
+      renderLeaders('smvpLeaders', countField('smvp'), 'SMVP');
+      renderLeaders('tmvpLeaders', countField('tmvp'), 'TMVP');
+      renderLeaders('dmvpLeaders', countField('dmvp'), 'DMVP');
+      renderLeaders('cmvpLeaders', countField('cmvp'), 'CMVP');
     }
 
     window.toggleRecord = function(id){
