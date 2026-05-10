@@ -7,9 +7,9 @@
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #0f172a; }
-    .page { padding: 24px; }
+    .page { padding: max(12px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom)); }
     .shell { max-width: 1280px; margin: 0 auto; }
-    .hero { background:#020617; color:white; border-radius:28px; padding:28px; display:flex; justify-content:space-between; gap:24px; box-shadow:0 18px 45px rgba(15,23,42,.2); }
+    .hero { background:#020617; color:white; border-radius:24px; padding:20px; display:flex; justify-content:space-between; gap:18px; box-shadow:0 18px 45px rgba(15,23,42,.2); }
     .nav-tabs { display:flex; gap:10px; margin:18px 0 0; flex-wrap:wrap; }
     .nav-tab { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1); color:white; border-radius:999px; padding:10px 14px; font-weight:900; cursor:pointer; }
     .nav-tab.active { background:white; color:#020617; }
@@ -24,7 +24,7 @@
     .stat-card span { color:#cbd5e1; font-size:12px; }
     .layout { margin-top:24px; display:grid; grid-template-columns:420px 1fr; gap:24px; align-items:start; }
     .main-column { display:grid; gap:24px; }
-    .card { background:white; border:1px solid #e2e8f0; border-radius:28px; padding:22px; box-shadow:0 8px 24px rgba(15,23,42,.06); }
+    .card { background:white; border:1px solid #e2e8f0; border-radius:22px; padding:16px; box-shadow:0 8px 24px rgba(15,23,42,.06); }
     .form-card { display:grid; gap:18px; }
     .section-title { display:flex; align-items:center; gap:10px; }
     .section-title h2, .database-header h2 { margin:0; font-size:24px; font-weight:900; }
@@ -73,21 +73,22 @@
     .rules-list li { background:#f1f5f9; border-radius:16px; padding:12px; line-height:1.4; }
     .bracket-controls { display:grid; gap:16px; }
     .choice-row { display:flex; gap:10px; flex-wrap:wrap; }
-    .choice-button { border:1px solid #cbd5e1; background:white; color:#0f172a; border-radius:16px; padding:12px 16px; font-weight:900; cursor:pointer; }
+    .choice-button { border:1px solid #cbd5e1; background:white; color:#0f172a; border-radius:16px; padding:14px 16px; font-weight:900; cursor:pointer; min-height:46px; }
     .choice-button.active, .choice-button:hover { background:#020617; color:white; }
     .manual-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:14px; }
     .manual-grid input { border:1px solid #e2e8f0; border-radius:12px; padding:10px; font-size:14px; }
-    .bracket-board { margin-top:20px; overflow-x:auto; padding-bottom:12px; }
-    .bracket-rounds { display:flex; gap:18px; min-width:max-content; }
+    .bracket-board { margin-top:20px; overflow-x:auto; padding-bottom:12px; -webkit-overflow-scrolling:touch; }
+    .bracket-rounds { display:flex; gap:14px; min-width:max-content; }
     .bracket-round { width:220px; display:grid; gap:12px; align-content:start; }
     .bracket-round h3 { margin:0; background:#020617; color:white; border-radius:14px; padding:10px; text-align:center; font-size:14px; }
     .matchup { background:#f8fafc; border:1px solid #e2e8f0; border-radius:16px; padding:10px; display:grid; gap:8px; }
-    .team-slot { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:9px; min-height:38px; font-weight:800; cursor:pointer; }
+    .team-slot { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:11px; min-height:44px; font-weight:800; cursor:pointer; display:flex; align-items:center; }
     .team-slot:hover { background:#ecfeff; }
-    .winner-slot { background:#dcfce7; border-color:#86efac; }
+    .winner-slot, .team-win { background:#dcfce7; border-color:#22c55e; color:#14532d; }
+    .team-loss { background:#fee2e2; border-color:#ef4444; color:#7f1d1d; text-decoration:line-through; }
     .bracket-note { margin-top:12px; color:#64748b; font-size:14px; }
     @media (max-width:980px) { .hero,.database-header { flex-direction:column; align-items:stretch; } .layout,.bottom-grid { grid-template-columns:1fr; } .stat-grid { grid-template-columns:repeat(3,1fr); } .search-input { max-width:none; } }
-    @media (max-width:760px) { .page { padding:14px; } .field-grid.two,.stat-grid,.manual-grid { grid-template-columns:1fr; } .award-grid { grid-template-columns:1fr; } .bracket-round { width:200px; } }
+    @media (max-width:760px) { h1 { font-size:34px; } .hero { border-radius:20px; padding:16px; } .nav-tab { flex:1; text-align:center; } .choice-row { display:grid; grid-template-columns:1fr; } .field-grid.two,.stat-grid,.manual-grid { grid-template-columns:1fr; } .award-grid { grid-template-columns:1fr; } .bracket-round { width:82vw; max-width:310px; } .bracket-rounds { gap:12px; } .team-slot { min-height:48px; font-size:16px; } .bottom-grid { gap:14px; } }
   </style>
 </head>
 <body>
@@ -185,11 +186,12 @@
 
   <script>
     const ncaaTeams = [
-      'Duke','North Carolina','Kansas','Kentucky','Arkansas','UConn','Gonzaga','Houston','Alabama','Arizona','UCLA','Texas','Baylor','Purdue','Tennessee','Auburn','Michigan State','Indiana','Villanova','Syracuse','Virginia','Louisville','Florida','Miami','Creighton','Marquette','Memphis','Illinois','Wisconsin','Iowa State','Oklahoma','Oklahoma State','Texas Tech','TCU','Kansas State','Missouri','LSU','Mississippi State','Ole Miss','South Carolina','Georgia','Vanderbilt','Notre Dame','Clemson','Florida State','NC State','Wake Forest','Stanford','California','Oregon','Washington','USC','Utah','BYU','San Diego State','Boise State','Nevada','New Mexico','Colorado State','VCU','Dayton','Saint Mary’s','Grand Canyon','Liberty','Drake'
+      'Abilene Christian','Air Force','Akron','Alabama','Alabama A&M','Alabama State','Albany','Alcorn State','American','Appalachian State','Arizona','Arizona State','Arkansas','Arkansas State','Arkansas-Pine Bluff','Army','Auburn','Austin Peay','Ball State','Baylor','Bellarmine','Belmont','Bethune-Cookman','Binghamton','Boise State','Boston College','Boston University','Bowling Green','Bradley','Brown','Bryant','Bucknell','Buffalo','Butler','BYU','Cal Baptist','Cal Poly','Cal State Bakersfield','Cal State Fullerton','Cal State Northridge','California','Campbell','Canisius','Central Arkansas','Central Connecticut','Central Michigan','Charleston','Charlotte','Chattanooga','Chicago State','Cincinnati','Citadel','Clemson','Cleveland State','Coastal Carolina','Colgate','Colorado','Colorado State','Columbia','Coppin State','Cornell','Creighton','Dartmouth','Davidson','Dayton','Delaware','Delaware State','Denver','DePaul','Detroit Mercy','Drake','Drexel','Duke','Duquesne','East Carolina','East Tennessee State','Eastern Illinois','Eastern Kentucky','Eastern Michigan','Eastern Washington','Elon','Evansville','Fairfield','Fairleigh Dickinson','FIU','Florida','Florida A&M','Florida Atlantic','Florida Gulf Coast','Florida State','Fordham','Fresno State','Furman','Gardner-Webb','George Mason','George Washington','Georgetown','Georgia','Georgia Southern','Georgia State','Georgia Tech','Gonzaga','Grambling State','Grand Canyon','Green Bay','Hampton','Harvard','Hawaii','High Point','Hofstra','Holy Cross','Houston','Houston Christian','Howard','Idaho','Idaho State','Illinois','Illinois State','Incarnate Word','Indiana','Indiana State','Iona','Iowa','Iowa State','Jackson State','Jacksonville','Jacksonville State','James Madison','Kansas','Kansas City','Kansas State','Kennesaw State','Kent State','Kentucky','La Salle','Lafayette','Lamar','Lehigh','Liberty','Lipscomb','Little Rock','Long Beach State','Long Island','Longwood','Louisiana','Louisiana Tech','Louisville','Loyola Chicago','Loyola Maryland','LSU','Maine','Manhattan','Marist','Marquette','Marshall','Maryland','Maryland Eastern Shore','Massachusetts','McNeese','Memphis','Mercer','Merrimack','Miami','Miami (OH)','Michigan','Michigan State','Middle Tennessee','Milwaukee','Minnesota','Mississippi State','Mississippi Valley State','Missouri','Missouri State','Monmouth','Montana','Montana State','Morehead State','Morgan State','Mount St. Mary’s','Murray State','Navy','NC State','Nebraska','Nevada','New Hampshire','New Mexico','New Mexico State','New Orleans','Niagara','Nicholls','NJIT','Norfolk State','North Alabama','North Carolina','North Carolina A&T','North Carolina Central','North Dakota','North Dakota State','North Florida','North Texas','Northeastern','Northern Arizona','Northern Colorado','Northern Illinois','Northern Iowa','Northwestern','Northwestern State','Notre Dame','Oakland','Ohio','Ohio State','Oklahoma','Oklahoma State','Old Dominion','Ole Miss','Omaha','Oral Roberts','Oregon','Oregon State','Pacific','Penn','Penn State','Pepperdine','Pittsburgh','Portland','Portland State','Prairie View A&M','Presbyterian','Princeton','Providence','Purdue','Queens','Quinnipiac','Radford','Rhode Island','Rice','Richmond','Rider','Robert Morris','Rutgers','Sacramento State','Sacred Heart','Saint Francis','Saint Joseph’s','Saint Louis','Saint Mary’s','Saint Peter’s','Sam Houston','Samford','San Diego','San Diego State','San Francisco','San Jose State','Santa Clara','Seattle','Seton Hall','Siena','South Alabama','South Carolina','South Carolina State','South Dakota','South Dakota State','South Florida','Southeast Missouri State','Southeastern Louisiana','Southern','Southern Illinois','Southern Indiana','Southern Miss','Southern Utah','St. Bonaventure','St. John’s','Stanford','Stephen F. Austin','Stetson','Stonehill','Syracuse','Tarleton State','TCU','Temple','Tennessee','Tennessee State','Tennessee Tech','Texas','Texas A&M','Texas A&M-Commerce','Texas Southern','Texas State','Texas Tech','Toledo','Towson','Troy','Tulane','Tulsa','UAB','UC Davis','UC Irvine','UC Riverside','UC San Diego','UC Santa Barbara','UCF','UCLA','UConn','UIC','UL Monroe','UMass Lowell','UMBC','UNC Asheville','UNC Greensboro','UNC Wilmington','UNLV','USC','UT Arlington','UT Martin','UT Rio Grande Valley','UTEP','Utah','Utah State','Utah Tech','Utah Valley','UTSA','Valparaiso','Vanderbilt','Vermont','Villanova','Virginia','Virginia Tech','VMI','Wagner','Wake Forest','Washington','Washington State','Weber State','West Virginia','Western Carolina','Western Illinois','Western Kentucky','Western Michigan','Wichita State','William & Mary','Winthrop','Wisconsin','Wofford','Wright State','Wyoming','Xavier','Yale','Youngstown State'
     ];
     let bracketSize = 8;
     let bracketTeams = [];
     let bracketRounds = [];
+    let bracketPicks = {};
 
     const starterRecords = [
       { id: 1, year: '2067', era: 'Global Era', teamCount: '16 Team', champion: '7 Miami', runnerUp: '8 Texas', mvp: '7 Miami', smvp: '5 Great Britain', tmvp: '8 Texas', dmvp: '3 Duke', cmvp: '7 Miami', notes: 'Miami wins the first CCBA title of the Global Era.', image: null },
@@ -216,8 +218,22 @@
       $('bracketBoard').innerHTML = '';
     }
 
+    function randomNumber(){
+      if(window.crypto && crypto.getRandomValues){
+        const array = new Uint32Array(1);
+        crypto.getRandomValues(array);
+        return array[0] / 4294967296;
+      }
+      return Math.random();
+    }
+
     function shuffleTeams(list){
-      return [...list].sort(() => Math.random() - 0.5);
+      const shuffled = [...list];
+      for(let i = shuffled.length - 1; i > 0; i--){
+        const j = Math.floor(randomNumber() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
     }
 
     window.autoFillBracket = function(){
@@ -238,6 +254,7 @@
     window.clearBracket = function(){
       bracketTeams = [];
       bracketRounds = [];
+      bracketPicks = {};
       $('bracketBoard').innerHTML = '';
       $('manualArea').style.display = 'none';
     }
@@ -251,6 +268,7 @@
     }
 
     function createBracket(teams){
+      bracketPicks = {};
       bracketRounds = [teams];
       let count = teams.length / 2;
       while(count >= 1){
@@ -263,7 +281,15 @@
     window.pickWinner = function(roundIndex, matchIndex, team){
       if(!team) return;
       if(!bracketRounds[roundIndex + 1]) return;
+      bracketPicks[roundIndex + '-' + matchIndex] = team;
       bracketRounds[roundIndex + 1][matchIndex] = team;
+      for(let r = roundIndex + 2; r < bracketRounds.length; r++){
+        bracketRounds[r] = bracketRounds[r].map(() => '');
+      }
+      Object.keys(bracketPicks).forEach(key => {
+        const [r] = key.split('-').map(Number);
+        if(r > roundIndex) delete bracketPicks[key];
+      });
       renderBracket();
     }
 
@@ -274,7 +300,10 @@
         return `<div class="bracket-round"><h3>${isFinalWinner ? 'Champion' : roundName(roundIndex, totalRounds)}</h3>${isFinalWinner ? `<div class="matchup"><div class="team-slot winner-slot">${round[0] || 'Winner'}</div></div>` : Array.from({length: round.length / 2}, (_, matchIndex) => {
           const teamA = round[matchIndex * 2] || '';
           const teamB = round[matchIndex * 2 + 1] || '';
-          return `<div class="matchup"><div class="team-slot" onclick="pickWinner(${roundIndex}, ${matchIndex}, '${teamA.replace(/'/g, "&#39;")}')">${teamA || 'TBD'}</div><div class="team-slot" onclick="pickWinner(${roundIndex}, ${matchIndex}, '${teamB.replace(/'/g, "&#39;")}')">${teamB || 'TBD'}</div></div>`;
+          const picked = bracketPicks[roundIndex + '-' + matchIndex] || '';
+          const teamAClass = picked === teamA && teamA ? 'team-win' : picked && teamA ? 'team-loss' : '';
+          const teamBClass = picked === teamB && teamB ? 'team-win' : picked && teamB ? 'team-loss' : '';
+          return `<div class="matchup"><div class="team-slot ${teamAClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, '${teamA.replace(/'/g, "&#39;")}')">${teamA || 'TBD'}</div><div class="team-slot ${teamBClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, '${teamB.replace(/'/g, "&#39;")}')">${teamB || 'TBD'}</div></div>`;
         }).join('')}</div>`;
       }).join('')}</div>`;
     }
