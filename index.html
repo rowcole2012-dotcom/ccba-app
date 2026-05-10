@@ -45,12 +45,18 @@
     .database-header p { margin:6px 0 0; color:#64748b; font-size:14px; }
     .search-input { max-width:320px; }
     .table { border:1px solid #e2e8f0; border-radius:20px; overflow:hidden; }
-    .table-head, .record-main { display:grid; grid-template-columns:.7fr 1fr 1fr 1fr 1fr 1fr 1fr .8fr; gap:12px; align-items:center; }
-    .table-head { background:#f1f5f9; color:#64748b; padding:12px 14px; font-size:12px; font-weight:900; text-transform:uppercase; }
-    .record-row { padding:14px; border-top:1px solid #e2e8f0; }
+    .table-head { display:none; }
+    .record-row { border-top:1px solid #e2e8f0; }
     .record-row:first-of-type { border-top:0; }
-    .record-main { font-size:14px; }
-    .record-details { margin-top:12px; background:#f8fafc; color:#475569; border-radius:14px; padding:12px; font-size:14px; line-height:1.5; }
+    .record-summary { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px; background:white; border:0; cursor:pointer; text-align:left; font-size:18px; font-weight:900; color:#0f172a; }
+    .record-summary:hover { background:#f8fafc; }
+    .record-year { display:flex; align-items:center; gap:10px; }
+    .record-arrow { font-size:18px; color:#64748b; }
+    .record-details { display:none; margin:0 14px 14px; background:#f8fafc; color:#475569; border-radius:14px; padding:14px; font-size:14px; line-height:1.6; }
+    .record-row.open .record-details { display:block; }
+    .award-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
+    .award-grid div { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:10px; }
+    .storyline { margin-top:10px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:10px; }
     .actions { display:flex; gap:8px; }
     .record-image { margin-top:12px; max-height:200px; }
     .empty-state { padding:22px; color:#64748b; text-align:center; }
@@ -61,7 +67,7 @@
     .rules-list { list-style:none; padding:0; margin:16px 0 0; display:grid; gap:10px; }
     .rules-list li { background:#f1f5f9; border-radius:16px; padding:12px; line-height:1.4; }
     @media (max-width:980px) { .hero,.database-header { flex-direction:column; align-items:stretch; } .layout,.bottom-grid { grid-template-columns:1fr; } .stat-grid { grid-template-columns:repeat(3,1fr); } .search-input { max-width:none; } }
-    @media (max-width:760px) { .page { padding:14px; } .field-grid.two,.stat-grid { grid-template-columns:1fr; } .table-head { display:none; } .record-main { grid-template-columns:1fr 1fr; } }
+    @media (max-width:760px) { .page { padding:14px; } .field-grid.two,.stat-grid { grid-template-columns:1fr; } .award-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -160,13 +166,35 @@ records.forEach(r => {
       $('champCount').textContent = champs.length;
 
       $('records').innerHTML = filtered.length ? filtered.map(r => `
-        <article class="record-row">
-          <div class="record-main"><strong>${r.year}</strong><span>${r.era}</span><b>${r.champion}</b><span>${r.runnerUp}</span><span>${r.mvp}</span><span>${r.smvp}</span><span>${r.tmvp}</span><div class="actions"><button onclick="editRecord(${r.id})">✏️</button><button onclick="deleteRecord(${r.id})">🗑️</button></div></div>
-          <div class="record-details"><b>DMVP:</b> ${r.dmvp || '—'} <b>CMVP:</b> ${r.cmvp || '—'} ${r.notes || 'No notes yet.'}</div>
-          ${r.image ? `<img class="record-image" src="${r.image}" alt="${r.year} bracket">` : ''}
+        <article class="record-row" id="record-${r.id}">
+          <button class="record-summary" onclick="toggleRecord(${r.id})">
+            <span class="record-year">${r.year}</span>
+            <span class="record-arrow">▼</span>
+          </button>
+          <div class="record-details">
+            <b>Era:</b> ${r.era || '—'}<br>
+            <b>Champion:</b> ${r.champion || '—'}<br>
+            <b>Runner-Up:</b> ${r.runnerUp || '—'}
+            <div class="award-grid">
+              <div><b>MVP:</b> ${r.mvp || '—'}</div>
+              <div><b>SMVP:</b> ${r.smvp || '—'}</div>
+              <div><b>TMVP:</b> ${r.tmvp || '—'}</div>
+              <div><b>DMVP:</b> ${r.dmvp || '—'}</div>
+              <div><b>CMVP:</b> ${r.cmvp || '—'}</div>
+              <div><b>Teams:</b> ${r.teamCount || '—'}</div>
+            </div>
+            <div class="storyline"><b>Storyline:</b> ${r.notes || 'No storyline yet.'}</div>
+            ${r.image ? `<img class="record-image" src="${r.image}" alt="${r.year} bracket">` : ''}
+            <div class="actions" style="margin-top:12px;"><button onclick="editRecord(${r.id})">✏️ Edit</button><button onclick="deleteRecord(${r.id})">🗑️ Delete</button></div>
+          </div>
         </article>`).join('') : '<div class="empty-state">No seasons match your search.</div>';
 
       $('leaders').innerHTML = champs.length ? champs.map(([team,total],i)=>`<div class="leader"><span class="rank">${i+1}</span><strong>${team}</strong><b>${total} title${total===1?'':'s'}</b></div>`).join('') : '<p>No champions yet.</p>';
+    }
+
+    window.toggleRecord = function(id){
+      const row = document.getElementById('record-' + id);
+      if(row) row.classList.toggle('open');
     }
 
     window.editRecord = function(id){ const r = records.find(x => x.id === id); if(!r) return; editingId = id; setForm(r); $('saveBtn').textContent = '💾 Save Changes'; window.scrollTo({top:0, behavior:'smooth'}); }
