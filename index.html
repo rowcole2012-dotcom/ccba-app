@@ -305,7 +305,10 @@
       renderLeaders('dmvpLeaders', countField('dmvp'), 'DMVP');
       renderLeaders('cmvpLeaders', countField('cmvp'), 'CMVP');
     }
-    function toggleRecord(id){ const row = $('record-' + id); if(row) row.classList.toggle('open'); }
+    function toggleRecord(id){
+      const row = typeof id === 'string' ? $(id) : $('record-' + id);
+      if(row) row.classList.toggle('open');
+    }
     function editRecord(id){
       const record = records.find(item => item.id === id);
       if(!record) return;
@@ -398,3 +401,4 @@
   </script>
 </body>
 </html>
+
