@@ -147,7 +147,15 @@
       const filtered = records.filter(r => !q || Object.values(r).some(v => String(v ?? '').toLowerCase().includes(q)));
       $('seasonCount').textContent = records.length;
       const champCounts = {};
-      records.forEach(r => { if(r.champion) champCounts[r.champion] = (champCounts[r.champion] || 0) + 1; });
+    function cleanTeamName(name){
+  return String(name || '').trim().replace(/^\d+\s+/, '').replace(/\s+/g, ' ');
+}
+
+records.forEach(r => {
+  const team = cleanTeamName(r.champion);
+  if(team) champCounts[team] = (champCounts[team] || 0) + 1;
+});
+
       const champs = Object.entries(champCounts).sort((a,b)=>b[1]-a[1]);
       $('champCount').textContent = champs.length;
 
