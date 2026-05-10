@@ -82,8 +82,11 @@
     .bracket-round { width:220px; display:grid; gap:12px; align-content:start; }
     .bracket-round h3 { margin:0; background:#020617; color:white; border-radius:14px; padding:10px; text-align:center; font-size:14px; }
     .matchup { background:#f8fafc; border:1px solid #e2e8f0; border-radius:16px; padding:10px; display:grid; gap:8px; }
-    .team-slot { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:11px; min-height:44px; font-weight:800; cursor:pointer; display:flex; align-items:center; }
+    .team-slot { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:11px; min-height:44px; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:8px; }
     .team-slot:hover { background:#ecfeff; }
+    .seed-badge { min-width:28px; height:28px; border-radius:999px; display:inline-grid; place-items:center; background:#020617; color:white; font-size:12px; font-weight:900; flex-shrink:0; }
+    .team-win .seed-badge, .winner-slot .seed-badge { background:#16a34a; }
+    .team-loss .seed-badge { background:#dc2626; }
     .winner-slot, .team-win { background:#dcfce7; border-color:#22c55e; color:#14532d; }
     .team-loss { background:#fee2e2; border-color:#ef4444; color:#7f1d1d; text-decoration:line-through; }
     .bracket-note { margin-top:12px; color:#64748b; font-size:14px; }
@@ -100,7 +103,7 @@
           <h1>CCBA Photo Import Tracker</h1>
           <p class="hero-text">Upload bracket photos, type in the winners and awards, then build your official CCBA history database.</p>
           <div class="nav-tabs">
-            <button class="nav-tab active" id="homeTab" onclick="showPage('home')">Champtionships</button>
+            <button class="nav-tab active" id="homeTab" onclick="showPage('home')">Championships</button>
             <button class="nav-tab" id="bracketTab" onclick="showPage('bracket')">Bracket Maker</button>
           </div>
         </div>
@@ -237,17 +240,22 @@
     }
 
     window.autoFillBracket = function(){
-      bracketTeams = shuffleTeams(ncaaTeams).slice(0, bracketSize);
+      bracketTeams = shuffleTeams(ncaaTeams)
+        .slice(0, bracketSize)
+        .map((name, index) => ({ seed: index + 1, name }));
       createBracket(bracketTeams);
     }
 
     window.showManualFill = function(){
       $('manualArea').style.display = 'block';
-      $('manualInputs').innerHTML = Array.from({length: bracketSize}, (_, i) => `<input id="manualTeam${i}" placeholder="Team ${i + 1}">`).join('');
+      $('manualInputs').innerHTML = Array.from({length: bracketSize}, (_, i) => `<input id="manualTeam${i}" placeholder="Seed ${i + 1} team name">`).join('');
     }
 
     window.buildManualBracket = function(){
-      bracketTeams = Array.from({length: bracketSize}, (_, i) => $('manualTeam' + i).value.trim() || `Team ${i + 1}`);
+      bracketTeams = Array.from({length: bracketSize}, (_, i) => ({
+        seed: i + 1,
+        name: $('manualTeam' + i).value.trim() || `Team ${i + 1}`
+      }));
       createBracket(bracketTeams);
     }
 
@@ -278,8 +286,9 @@
       renderBracket();
     }
 
-    window.pickWinner = function(roundIndex, matchIndex, team){
-      if(!team) return;
+    window.pickWinner = function(roundIndex, matchIndex, slotIndex){
+      const team = bracketRounds[roundIndex][slotIndex];
+      if(!team || !team.name) return;
       if(!bracketRounds[roundIndex + 1]) return;
       bracketPicks[roundIndex + '-' + matchIndex] = team;
       bracketRounds[roundIndex + 1][matchIndex] = team;
@@ -293,17 +302,28 @@
       renderBracket();
     }
 
+    function displayTeam(team){
+      if(!team) return 'TBD';
+      return `<span class="seed-badge">${team.seed}</span><span>${team.name}</span>`;
+    }
+
+    function sameTeam(a, b){
+      return a && b && a.seed === b.seed && a.name === b.name;
+    }
+
     function renderBracket(){
       const totalRounds = bracketRounds.length;
       $('bracketBoard').innerHTML = `<div class="bracket-rounds">${bracketRounds.map((round, roundIndex) => {
         const isFinalWinner = roundIndex === totalRounds - 1;
-        return `<div class="bracket-round"><h3>${isFinalWinner ? 'Champion' : roundName(roundIndex, totalRounds)}</h3>${isFinalWinner ? `<div class="matchup"><div class="team-slot winner-slot">${round[0] || 'Winner'}</div></div>` : Array.from({length: round.length / 2}, (_, matchIndex) => {
-          const teamA = round[matchIndex * 2] || '';
-          const teamB = round[matchIndex * 2 + 1] || '';
-          const picked = bracketPicks[roundIndex + '-' + matchIndex] || '';
-          const teamAClass = picked === teamA && teamA ? 'team-win' : picked && teamA ? 'team-loss' : '';
-          const teamBClass = picked === teamB && teamB ? 'team-win' : picked && teamB ? 'team-loss' : '';
-          return `<div class="matchup"><div class="team-slot ${teamAClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, '${teamA.replace(/'/g, "&#39;")}')">${teamA || 'TBD'}</div><div class="team-slot ${teamBClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, '${teamB.replace(/'/g, "&#39;")}')">${teamB || 'TBD'}</div></div>`;
+        return `<div class="bracket-round"><h3>${isFinalWinner ? 'Champion' : roundName(roundIndex, totalRounds)}</h3>${isFinalWinner ? `<div class="matchup"><div class="team-slot winner-slot">${round[0] ? displayTeam(round[0]) : 'Winner'}</div></div>` : Array.from({length: round.length / 2}, (_, matchIndex) => {
+          const slotA = matchIndex * 2;
+          const slotB = matchIndex * 2 + 1;
+          const teamA = round[slotA];
+          const teamB = round[slotB];
+          const picked = bracketPicks[roundIndex + '-' + matchIndex] || null;
+          const teamAClass = sameTeam(picked, teamA) ? 'team-win' : picked && teamA ? 'team-loss' : '';
+          const teamBClass = sameTeam(picked, teamB) ? 'team-win' : picked && teamB ? 'team-loss' : '';
+          return `<div class="matchup"><div class="team-slot ${teamAClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, ${slotA})">${teamA ? displayTeam(teamA) : 'TBD'}</div><div class="team-slot ${teamBClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, ${slotB})">${teamB ? displayTeam(teamB) : 'TBD'}</div></div>`;
         }).join('')}</div>`;
       }).join('')}</div>`;
     }
