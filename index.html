@@ -383,7 +383,24 @@
     function chooseBracketSize(size){ bracketSize = size; [8,16,64].forEach(n => $('size' + n).classList.toggle('active', n === size)); clearBracket(); prepBracketForm(); }
     function randomNumber(){ if(window.crypto && crypto.getRandomValues){ const array = new Uint32Array(1); crypto.getRandomValues(array); return array[0] / 4294967296; } return Math.random(); }
     function shuffleTeams(list){ const shuffled = [...list]; for(let i = shuffled.length - 1; i > 0; i--){ const j = Math.floor(randomNumber() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } return shuffled; }
-    function getSeedOrder(size){ const regionSize = size === 64 ? 16 : size; const regionCount = size === 64 ? 4 : 1; const order = []; for(let region = 1; region <= regionCount; region++){ for(let seed = 1; seed <= regionSize / 2; seed++){ order.push({ seed, region }); order.push({ seed: regionSize + 1 - seed, region }); } } return order; }
+    function getSeedOrder(size){
+      const layouts = {
+        8: [1,8,5,4,3,6,7,2],
+        16: [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15],
+      };
+
+      const regionCount = size === 64 ? 4 : 1;
+      const baseSeeds = size === 64 ? layouts[16] : layouts[size];
+      const order = [];
+
+      for(let region = 1; region <= regionCount; region++){
+        baseSeeds.forEach(seed => {
+          order.push({ seed, region });
+        });
+      }
+
+      return order;
+    }
     function makeSeededBracket(names){ return getSeedOrder(bracketSize).map((slot, index) => ({ id: `${slot.region}-${slot.seed}-${index}-${names[index]}`, seed: slot.seed, region: slot.region, name: names[index] || `Team ${index + 1}` })); }
     function autoFillBracket(){ createBracket(makeSeededBracket(shuffleTeams(ncaaTeams).slice(0, bracketSize))); }
     function showManualFill(){ $('manualArea').style.display = 'block'; const seedOrder = getSeedOrder(bracketSize); $('manualInputs').innerHTML = seedOrder.map((slot, index) => `<input id="manualTeam${index}" placeholder="${bracketSize === 64 ? 'Region ' + slot.region + ' - ' : ''}Seed ${slot.seed} team name">`).join(''); }
@@ -401,4 +418,3 @@
   </script>
 </body>
 </html>
-
