@@ -253,16 +253,50 @@
       const champs = countField('champion');
       $('seasonCount').textContent = records.length;
       $('champCount').textContent = champs.length;
-      $('records').innerHTML = filtered.length ? filtered.map(record => `
-        <article class="record-row" id="record-${record.id}">
-          <button class="record-summary" onclick="toggleRecord(${record.id})"><span>${record.year}</span><span>▼</span></button>
+
+      const groupedByEra = {};
+      filtered.forEach(record => {
+        const eraName = record.era || 'Unknown Era';
+        if(!groupedByEra[eraName]) groupedByEra[eraName] = [];
+        groupedByEra[eraName].push(record);
+      });
+
+      $('records').innerHTML = Object.keys(groupedByEra).length ? Object.entries(groupedByEra).map(([era, eraRecords], eraIndex) => `
+        <article class="record-row ${eraIndex === 0 ? 'open' : ''}" id="era-${eraIndex}">
+          <button class="record-summary" onclick="toggleRecord('era-${eraIndex}')">
+            <span>🏆 ${era}</span>
+            <span>▼</span>
+          </button>
           <div class="record-details">
-            <b>Era:</b> ${record.era || '—'}<br><b>Champion:</b> ${record.champion || '—'}<br><b>Runner-Up:</b> ${record.runnerUp || '—'}
-            <div class="award-grid"><div><b>MVP:</b> ${record.mvp || '—'}</div><div><b>SMVP:</b> ${record.smvp || '—'}</div><div><b>TMVP:</b> ${record.tmvp || '—'}</div><div><b>DMVP:</b> ${record.dmvp || '—'}</div><div><b>CMVP:</b> ${record.cmvp || '—'}</div><div><b>Teams:</b> ${record.teamCount || '—'}</div></div>
-            <div class="storyline"><b>Storyline:</b> ${record.notes || 'No storyline yet.'}</div>
-            <div class="actions" style="margin-top:12px;"><button onclick="editRecord(${record.id})">✏️ Edit</button><button onclick="deleteRecord(${record.id})">🗑️ Delete</button></div>
+            ${eraRecords.map(record => `
+              <article class="record-row" id="record-${record.id}" style="margin-bottom:12px;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
+                <button class="record-summary" onclick="toggleRecord(${record.id})">
+                  <span>${record.year}</span>
+                  <span>▼</span>
+                </button>
+                <div class="record-details">
+                  <b>Champion:</b> ${record.champion || '—'}<br>
+                  <b>Runner-Up:</b> ${record.runnerUp || '—'}
+                  <div class="award-grid">
+                    <div><b>MVP:</b> ${record.mvp || '—'}</div>
+                    <div><b>SMVP:</b> ${record.smvp || '—'}</div>
+                    <div><b>TMVP:</b> ${record.tmvp || '—'}</div>
+                    <div><b>DMVP:</b> ${record.dmvp || '—'}</div>
+                    <div><b>CMVP:</b> ${record.cmvp || '—'}</div>
+                    <div><b>Teams:</b> ${record.teamCount || '—'}</div>
+                  </div>
+                  <div class="storyline"><b>Storyline:</b> ${record.notes || 'No storyline yet.'}</div>
+                  <div class="actions" style="margin-top:12px;">
+                    <button onclick="editRecord(${record.id})">✏️ Edit</button>
+                    <button onclick="deleteRecord(${record.id})">🗑️ Delete</button>
+                  </div>
+                </div>
+              </article>
+            `).join('')}
           </div>
-        </article>`).join('') : '<div class="empty-state">No seasons match your search.</div>';
+        </article>
+      `).join('') : '<div class="empty-state">No seasons match your search.</div>';
+
       renderLeaders('leaders', champs, 'title');
       renderLeaders('runnerUpLeaders', countField('runnerUp'), 'runner-up finish');
       renderLeaders('mvpLeaders', countField('mvp'), 'MVP');
