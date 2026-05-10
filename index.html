@@ -150,7 +150,9 @@
 
     function render(){
       const q = $('search').value.toLowerCase().trim();
-      const filtered = records.filter(r => !q || Object.values(r).some(v => String(v ?? '').toLowerCase().includes(q)));
+      const filtered = records
+        .filter(r => !q || Object.values(r).some(v => String(v ?? '').toLowerCase().includes(q)))
+        .sort((a, b) => Number(a.year) - Number(b.year));
       $('seasonCount').textContent = records.length;
       const champCounts = {};
     function cleanTeamName(name){
@@ -228,6 +230,7 @@ records.forEach(r => {
       if(!season.year.trim() || !season.champion.trim()) { alert('Add at least a year and champion first.'); return; }
       if(editingId) records = records.map(r => r.id === editingId ? {...season, id: editingId} : r);
       else records.push({...season, id: Date.now()});
+      records.sort((a, b) => Number(a.year) - Number(b.year));
       saveLocal(); clearForm(); render();
     });
     $('clearBtn').addEventListener('click', clearForm);
