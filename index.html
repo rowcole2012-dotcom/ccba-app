@@ -10,20 +10,20 @@
     .page { padding: max(12px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom)); }
     .shell { max-width: 1280px; margin: 0 auto; }
     .hero { background:#020617; color:white; border-radius:24px; padding:20px; display:flex; justify-content:space-between; gap:18px; box-shadow:0 18px 45px rgba(15,23,42,.2); }
-    .nav-tabs { display:flex; gap:10px; margin:18px 0 0; flex-wrap:wrap; }
-    .nav-tab { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1); color:white; border-radius:999px; padding:10px 14px; font-weight:900; cursor:pointer; }
-    .nav-tab.active { background:white; color:#020617; }
-    .app-page { display:none; }
-    .app-page.active { display:block; }
     .pill { display:inline-flex; background:rgba(255,255,255,.1); border-radius:999px; padding:6px 12px; margin:0 0 12px; font-size:14px; }
     h1 { font-size: clamp(34px, 5vw, 56px); margin:0; line-height:1; letter-spacing:-.04em; }
     .hero-text { color:#cbd5e1; max-width:680px; line-height:1.5; }
+    .nav-tabs { display:flex; gap:10px; margin:18px 0 0; flex-wrap:wrap; }
+    .nav-tab { border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.1); color:white; border-radius:999px; padding:10px 14px; font-weight:900; cursor:pointer; }
+    .nav-tab.active { background:white; color:#020617; }
     .stat-grid { display:grid; grid-template-columns:repeat(3,110px); gap:12px; align-content:center; }
     .stat-card { background:rgba(255,255,255,.1); border-radius:20px; padding:16px; text-align:center; }
     .stat-card strong { display:block; font-size:30px; }
     .stat-card span { color:#cbd5e1; font-size:12px; }
+    .app-page { display:none; }
+    .app-page.active { display:block; }
     .layout { margin-top:24px; display:grid; grid-template-columns:420px 1fr; gap:24px; align-items:start; }
-    .main-column { display:grid; gap:24px; }
+    .main-column { display:grid; gap:16px; }
     .card { background:white; border:1px solid #e2e8f0; border-radius:22px; padding:16px; box-shadow:0 8px 24px rgba(15,23,42,.06); }
     .dropdown-card { padding:0; overflow:hidden; }
     .dropdown-header { width:100%; border:0; background:white; color:#0f172a; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; font-weight:900; text-align:left; }
@@ -32,47 +32,35 @@
     .dropdown-content { display:none; padding:0 16px 16px; }
     .dropdown-card.open .dropdown-content { display:block; }
     .dropdown-arrow { color:#64748b; font-size:18px; }
-    .form-card { display:grid; gap:18px; }
-    .section-title { display:flex; align-items:center; gap:10px; }
-    .section-title h2, .database-header h2 { margin:0; font-size:24px; font-weight:900; }
-    .upload-box { cursor:pointer; border:2px dashed #cbd5e1; border-radius:24px; background:#f1f5f9; padding:26px; text-align:center; display:grid; gap:6px; justify-items:center; }
-    .upload-box:hover { background:#e2e8f0; }
-    .upload-box input { display:none; }
-    .upload-icon { font-size:38px; }
-    .upload-box small { color:#64748b; }
-    .preview-box p { margin:0 0 8px; color:#64748b; font-size:14px; font-weight:700; }
-    .preview-box img, .record-image { width:100%; max-height:280px; object-fit:contain; border-radius:18px; background:#f8fafc; border:1px solid #e2e8f0; }
-    .note-box { background:#fffbeb; color:#92400e; border-radius:18px; padding:14px; font-size:14px; line-height:1.4; }
+    .note-box { background:#fffbeb; color:#92400e; border-radius:18px; padding:14px; font-size:14px; line-height:1.4; margin-bottom:14px; }
     .field-grid { display:grid; gap:12px; }
     .field-grid.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .field { display:grid; gap:6px; }
+    .field { display:grid; gap:6px; margin-bottom:12px; }
     .field span { color:#64748b; font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.06em; }
     .field input, .field textarea, .search-input { width:100%; border:1px solid #e2e8f0; border-radius:14px; background:white; padding:11px 12px; font-size:14px; outline:none; }
     .field textarea { min-height:92px; resize:vertical; }
     .button-row { display:flex; gap:12px; }
-    .primary-button, .secondary-button, .actions button { border-radius:14px; padding:10px 14px; font-weight:900; cursor:pointer; }
+    .primary-button, .secondary-button, .danger-button, .actions button { border-radius:14px; padding:10px 14px; font-weight:900; cursor:pointer; }
     .primary-button { flex:1; color:white; background:#020617; border:0; }
     .secondary-button, .actions button { background:white; border:1px solid #cbd5e1; color:#0f172a; }
+    .danger-button { background:#fee2e2; border:1px solid #ef4444; color:#7f1d1d; }
     .database-header { display:flex; justify-content:space-between; gap:16px; align-items:center; margin-bottom:16px; }
+    .database-header h2 { margin:0; font-size:24px; font-weight:900; }
     .database-header p { margin:6px 0 0; color:#64748b; font-size:14px; }
     .search-input { max-width:320px; }
     .table { border:1px solid #e2e8f0; border-radius:20px; overflow:hidden; }
-    .table-head { display:none; }
     .record-row { border-top:1px solid #e2e8f0; }
     .record-row:first-of-type { border-top:0; }
     .record-summary { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px; background:white; border:0; cursor:pointer; text-align:left; font-size:18px; font-weight:900; color:#0f172a; }
     .record-summary:hover { background:#f8fafc; }
-    .record-year { display:flex; align-items:center; gap:10px; }
-    .record-arrow { font-size:18px; color:#64748b; }
     .record-details { display:none; margin:0 14px 14px; background:#f8fafc; color:#475569; border-radius:14px; padding:14px; font-size:14px; line-height:1.6; }
     .record-row.open .record-details { display:block; }
     .award-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
     .award-grid div { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:10px; }
     .storyline { margin-top:10px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:10px; }
-    .actions { display:flex; gap:8px; }
-    .record-image { margin-top:12px; max-height:200px; }
+    .actions { display:flex; gap:8px; flex-wrap:wrap; }
     .empty-state { padding:22px; color:#64748b; text-align:center; }
-    .bottom-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; }
+    .bottom-grid { display:grid; grid-template-columns:1fr; gap:16px; }
     .leader-list { display:grid; gap:10px; margin-top:16px; }
     .leader { display:grid; grid-template-columns:36px 1fr auto; gap:12px; align-items:center; background:#f1f5f9; border-radius:16px; padding:12px; }
     .rank { height:32px; width:32px; border-radius:999px; display:grid; place-items:center; background:white; font-weight:900; }
@@ -92,13 +80,13 @@
     .team-slot { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:11px; min-height:44px; font-weight:800; cursor:pointer; display:flex; align-items:center; gap:8px; }
     .team-slot:hover { background:#ecfeff; }
     .seed-badge { min-width:28px; height:28px; border-radius:999px; display:inline-grid; place-items:center; background:#020617; color:white; font-size:12px; font-weight:900; flex-shrink:0; }
-    .team-win .seed-badge, .winner-slot .seed-badge { background:#16a34a; }
-    .team-loss .seed-badge { background:#dc2626; }
     .winner-slot, .team-win { background:#dcfce7; border-color:#22c55e; color:#14532d; }
+    .team-win .seed-badge, .winner-slot .seed-badge { background:#16a34a; }
     .team-loss { background:#fee2e2; border-color:#ef4444; color:#7f1d1d; text-decoration:line-through; }
+    .team-loss .seed-badge { background:#dc2626; }
     .bracket-note { margin-top:12px; color:#64748b; font-size:14px; }
-    @media (max-width:980px) { .hero,.database-header { flex-direction:column; align-items:stretch; } .layout,.bottom-grid { grid-template-columns:1fr; } .stat-grid { grid-template-columns:repeat(3,1fr); } .search-input { max-width:none; } }
-    @media (max-width:760px) { h1 { font-size:34px; } .hero { border-radius:20px; padding:16px; } .nav-tab { flex:1; text-align:center; } .choice-row { display:grid; grid-template-columns:1fr; } .field-grid.two,.stat-grid,.manual-grid { grid-template-columns:1fr; } .award-grid { grid-template-columns:1fr; } .bracket-round { width:82vw; max-width:310px; } .bracket-rounds { gap:12px; } .team-slot { min-height:48px; font-size:16px; } .bottom-grid { gap:14px; } }
+    @media (max-width:980px) { .hero,.database-header { flex-direction:column; align-items:stretch; } .layout { grid-template-columns:1fr; } .stat-grid { grid-template-columns:repeat(3,1fr); } .search-input { max-width:none; } }
+    @media (max-width:760px) { h1 { font-size:34px; } .hero { border-radius:20px; padding:16px; } .nav-tab { flex:1; text-align:center; } .choice-row { display:grid; grid-template-columns:1fr; } .field-grid.two,.stat-grid,.manual-grid { grid-template-columns:1fr; } .award-grid { grid-template-columns:1fr; } .bracket-round { width:82vw; max-width:310px; } .team-slot { min-height:48px; font-size:16px; } .leader { grid-template-columns:36px 1fr; } .leader b { grid-column:2; } }
   </style>
 </head>
 <body>
@@ -108,91 +96,73 @@
         <div>
           <p class="pill">🏆 Cole's College Basketball Association</p>
           <h1>CCBA Championship Tracker</h1>
-          <p class="hero-text">Upload bracket photos, type in the winners and awards, then build your official CCBA history database.</p>
+          <p class="hero-text">Track champions, runner-ups, awards, storylines, and create March Madness-style brackets.</p>
           <div class="nav-tabs">
             <button class="nav-tab active" id="homeTab" onclick="showPage('home')">Championships</button>
             <button class="nav-tab" id="bracketTab" onclick="showPage('bracket')">Bracket Maker</button>
           </div>
         </div>
         <div class="stat-grid">
-          <div class="stat-card"><strong id="seasonCount">2</strong><span>Seasons</span></div>
-          <div class="stat-card"><strong id="champCount">2</strong><span>Champions</span></div>
+          <div class="stat-card"><strong id="seasonCount">0</strong><span>Seasons</span></div>
+          <div class="stat-card"><strong id="champCount">0</strong><span>Champions</span></div>
           <div class="stat-card"><strong>1v1</strong><span>Format</span></div>
         </div>
       </section>
 
       <section id="homePage" class="app-page active">
-      <section class="layout">
-        <aside class="card form-card dropdown-card open" id="championshipInputSection">
-          <button class="dropdown-header" onclick="toggleSection('championshipInputSection')"><span>📷 Championship Input</span><span class="dropdown-arrow">▼</span></button>
-          <div class="dropdown-content">
-          <label class="upload-box">
-            <span class="upload-icon">📸</span>
-            <strong>Upload a bracket or winners photo</strong>
-            <small>PNG, JPG, or screenshot (photos auto-remove if storage gets full)</small>
-            <input id="photoInput" type="file" accept="image/*" />
-          </label>
-          <div id="previewBox" class="preview-box" style="display:none;"><p id="photoName"></p><img id="photoPreview" alt="Uploaded bracket preview" /></div>
-          <div class="note-box"><b>Photo import note:</b> This website saves your seasons on this device using your browser storage.</div>
-          <div class="field-grid two"><label class="field"><span>Year</span><input id="year" value="2069"></label><label class="field"><span>Team Count</span><input id="teamCount" value="16 Team"></label></div>
-          <label class="field"><span>Era</span><input id="era" value="Global Era"></label>
-          <div class="field-grid two"><label class="field"><span>Champion</span><input id="champion" placeholder="5 UCLA"></label><label class="field"><span>Runner-Up</span><input id="runnerUp" placeholder="3 Texas"></label></div>
-          <div class="field-grid two">
-            <label class="field"><span>MVP</span><input id="mvp"></label>
-            <label class="field"><span>SMVP</span><input id="smvp"></label>
-            <label class="field"><span>TMVP</span><input id="tmvp"></label>
-            <label class="field"><span>DMVP</span><input id="dmvp"></label>
-            <label class="field"><span>CMVP</span><input id="cmvp"></label>
-          </div>
-          <label class="field"><span>Notes</span><textarea id="notes" placeholder="Add upset, rivalry, transfer, or dynasty notes..."></textarea></label>
-          <div class="button-row"><button class="primary-button" id="saveBtn">➕ Add Season</button><button class="secondary-button" id="clearBtn">Clear</button></div>
-          </div>
-        </aside>
-
-        <section class="main-column">
-          <div class="card dropdown-card open" id="seasonDatabaseSection">
-            <button class="dropdown-header" onclick="toggleSection('seasonDatabaseSection')"><span>📚 CCBA Season Database</span><span class="dropdown-arrow">▼</span></button>
+        <section class="layout">
+          <aside class="card dropdown-card open" id="championshipInputSection">
+            <button class="dropdown-header" onclick="toggleSection('championshipInputSection')"><span>📝 Championship Input</span><span class="dropdown-arrow">▼</span></button>
             <div class="dropdown-content">
-              <div class="database-header"><div><h2>CCBA Season Database</h2><p>Search champions, awards, years, eras, and notes.</p></div><input id="search" class="search-input" placeholder="Search CCBA history..."></div>
-              <div class="table"><div class="table-head"><span>Year</span><span>Era</span><span>Champ</span><span>Runner-Up</span><span>MVP</span><span>SMVP</span><span>TMVP</span><span>Actions</span></div><div id="records"></div></div>
+              <div class="note-box"><b>Photos removed:</b> This version saves data only, so storage will not fill up with images.</div>
+              <div class="field-grid two">
+                <label class="field"><span>Year</span><input id="year" value="2069"></label>
+                <label class="field"><span>Team Count</span><input id="teamCount" value="16 Team"></label>
+              </div>
+              <label class="field"><span>Era</span><input id="era" value="Global Era"></label>
+              <div class="field-grid two">
+                <label class="field"><span>Champion</span><input id="champion" placeholder="5 UCLA"></label>
+                <label class="field"><span>Runner-Up</span><input id="runnerUp" placeholder="3 Texas"></label>
+              </div>
+              <div class="field-grid two">
+                <label class="field"><span>MVP</span><input id="mvp"></label>
+                <label class="field"><span>SMVP</span><input id="smvp"></label>
+                <label class="field"><span>TMVP</span><input id="tmvp"></label>
+                <label class="field"><span>DMVP</span><input id="dmvp"></label>
+                <label class="field"><span>CMVP</span><input id="cmvp"></label>
+              </div>
+              <label class="field"><span>Notes / Storyline</span><textarea id="notes" placeholder="Add upset, rivalry, transfer, or dynasty notes..."></textarea></label>
+              <div class="button-row">
+                <button class="primary-button" id="saveBtn">➕ Add Season</button>
+                <button class="secondary-button" id="clearBtn">Clear</button>
+              </div>
             </div>
-          </div>
-          <div class="bottom-grid">
-            <div class="card dropdown-card" id="championshipLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('championshipLeadersSection')"><span>👑 Championship Leaders</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="leaders" class="leader-list"></div></div>
+          </aside>
+
+          <section class="main-column">
+            <div class="card dropdown-card open" id="seasonDatabaseSection">
+              <button class="dropdown-header" onclick="toggleSection('seasonDatabaseSection')"><span>📚 CCBA Season Database</span><span class="dropdown-arrow">▼</span></button>
+              <div class="dropdown-content">
+                <div class="database-header">
+                  <div><h2>CCBA Season Database</h2><p>Search champions, awards, years, eras, and notes.</p></div>
+                  <input id="search" class="search-input" placeholder="Search CCBA history...">
+                </div>
+                <div class="table"><div id="records"></div></div>
+              </div>
             </div>
-            <div class="card dropdown-card" id="runnerUpLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('runnerUpLeadersSection')"><span>🥈 Runner-Up Database</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="runnerUpLeaders" class="leader-list"></div></div>
+
+            <div class="bottom-grid">
+              <div class="card dropdown-card" id="championshipLeadersSection"><button class="dropdown-header" onclick="toggleSection('championshipLeadersSection')"><span>👑 Championship Leaders</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="leaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="runnerUpLeadersSection"><button class="dropdown-header" onclick="toggleSection('runnerUpLeadersSection')"><span>🥈 Runner-Up Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="runnerUpLeaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="mvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('mvpLeadersSection')"><span>⭐ MVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="mvpLeaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="smvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('smvpLeadersSection')"><span>🎯 SMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="smvpLeaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="tmvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('tmvpLeadersSection')"><span>🦒 TMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="tmvpLeaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="dmvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('dmvpLeadersSection')"><span>🛡️ DMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="dmvpLeaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="cmvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('cmvpLeadersSection')"><span>🔥 CMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="cmvpLeaders" class="leader-list"></div></div></div>
+              <div class="card dropdown-card" id="rulesSection"><button class="dropdown-header" onclick="toggleSection('rulesSection')"><span>🏅 Official CCBA Rules</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><ul class="rules-list"><li><b>Era Rule:</b> Every era lasts 3 seasons.</li><li><b>Game Format:</b> All games are 1-v-1.</li><li><b>International Rule:</b> International teams play each other in the first round.</li><li><b>Eligibility:</b> Every player gets 4 years of eligibility.</li></ul></div></div>
             </div>
-            <div class="card dropdown-card" id="mvpLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('mvpLeadersSection')"><span>⭐ MVP Database</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="mvpLeaders" class="leader-list"></div></div>
-            </div>
-            <div class="card dropdown-card" id="smvpLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('smvpLeadersSection')"><span>🎯 SMVP Database</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="smvpLeaders" class="leader-list"></div></div>
-            </div>
-            <div class="card dropdown-card" id="tmvpLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('tmvpLeadersSection')"><span>🦒 TMVP Database</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="tmvpLeaders" class="leader-list"></div></div>
-            </div>
-            <div class="card dropdown-card" id="dmvpLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('dmvpLeadersSection')"><span>🛡️ DMVP Database</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="dmvpLeaders" class="leader-list"></div></div>
-            </div>
-            <div class="card dropdown-card" id="cmvpLeadersSection">
-              <button class="dropdown-header" onclick="toggleSection('cmvpLeadersSection')"><span>🔥 CMVP Database</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><div id="cmvpLeaders" class="leader-list"></div></div>
-            </div>
-            <div class="card dropdown-card" id="rulesSection">
-              <button class="dropdown-header" onclick="toggleSection('rulesSection')"><span>🏅 Official CCBA Rules</span><span class="dropdown-arrow">▼</span></button>
-              <div class="dropdown-content"><ul class="rules-list"><li><b>Era Rule:</b> Every era lasts 3 seasons.</li><li><b>Game Format:</b> All games are 1-v-1.</li><li><b>International Rule:</b> International teams play each other in the first round.</li><li><b>Eligibility:</b> Every player gets 4 years of eligibility.</li></ul></div>
-            </div>
-          </div>
+          </section>
         </section>
-      </section>
       </section>
 
       <section id="bracketPage" class="app-page">
@@ -200,27 +170,9 @@
           <div class="section-title"><span>🏀</span><h2>March Madness Bracket Maker</h2></div>
           <p style="color:#64748b; line-height:1.5;">Create 8-team, 16-team, or 64-team brackets. Auto-fill with random NCAA Division 1 men's teams or manually type every team.</p>
           <div class="bracket-controls">
-            <div>
-              <h3>1. Choose bracket size</h3>
-              <div class="choice-row">
-                <button class="choice-button active" id="size8" onclick="chooseBracketSize(8)">8 Team</button>
-                <button class="choice-button" id="size16" onclick="chooseBracketSize(16)">16 Team</button>
-                <button class="choice-button" id="size64" onclick="chooseBracketSize(64)">64 Team</button>
-              </div>
-            </div>
-            <div>
-              <h3>2. Choose fill type</h3>
-              <div class="choice-row">
-                <button class="choice-button" onclick="autoFillBracket()">Auto Fill Random NCAA Teams</button>
-                <button class="choice-button" onclick="showManualFill()">Manual Fill</button>
-                <button class="choice-button" onclick="clearBracket()">Clear Bracket</button>
-              </div>
-            </div>
-            <div id="manualArea" style="display:none;">
-              <h3>3. Type your teams</h3>
-              <div id="manualInputs" class="manual-grid"></div>
-              <div class="choice-row" style="margin-top:12px;"><button class="primary-button" onclick="buildManualBracket()">Build Manual Bracket</button></div>
-            </div>
+            <div><h3>1. Choose bracket size</h3><div class="choice-row"><button class="choice-button active" id="size8" onclick="chooseBracketSize(8)">8 Team</button><button class="choice-button" id="size16" onclick="chooseBracketSize(16)">16 Team</button><button class="choice-button" id="size64" onclick="chooseBracketSize(64)">64 Team</button></div></div>
+            <div><h3>2. Choose fill type</h3><div class="choice-row"><button class="choice-button" onclick="autoFillBracket()">Auto Fill Random NCAA Teams</button><button class="choice-button" onclick="showManualFill()">Manual Fill</button><button class="choice-button" onclick="clearBracket()">Clear Bracket</button></div></div>
+            <div id="manualArea" style="display:none;"><h3>3. Type your teams</h3><div id="manualInputs" class="manual-grid"></div><div class="choice-row" style="margin-top:12px;"><button class="primary-button" onclick="buildManualBracket()">Build Manual Bracket</button></div></div>
           </div>
           <div class="bracket-note">Tip: Click a team in a matchup to send them to the next round.</div>
           <div id="bracketBoard" class="bracket-board"></div>
@@ -230,42 +182,151 @@
   </div>
 
   <script>
-    const ncaaTeams = [
-      'Abilene Christian','Air Force','Akron','Alabama','Alabama A&M','Alabama State','Albany','Alcorn State','American','Appalachian State','Arizona','Arizona State','Arkansas','Arkansas State','Arkansas-Pine Bluff','Army','Auburn','Austin Peay','Ball State','Baylor','Bellarmine','Belmont','Bethune-Cookman','Binghamton','Boise State','Boston College','Boston University','Bowling Green','Bradley','Brown','Bryant','Bucknell','Buffalo','Butler','BYU','Cal Baptist','Cal Poly','Cal State Bakersfield','Cal State Fullerton','Cal State Northridge','California','Campbell','Canisius','Central Arkansas','Central Connecticut','Central Michigan','Charleston','Charlotte','Chattanooga','Chicago State','Cincinnati','Citadel','Clemson','Cleveland State','Coastal Carolina','Colgate','Colorado','Colorado State','Columbia','Coppin State','Cornell','Creighton','Dartmouth','Davidson','Dayton','Delaware','Delaware State','Denver','DePaul','Detroit Mercy','Drake','Drexel','Duke','Duquesne','East Carolina','East Tennessee State','Eastern Illinois','Eastern Kentucky','Eastern Michigan','Eastern Washington','Elon','Evansville','Fairfield','Fairleigh Dickinson','FIU','Florida','Florida A&M','Florida Atlantic','Florida Gulf Coast','Florida State','Fordham','Fresno State','Furman','Gardner-Webb','George Mason','George Washington','Georgetown','Georgia','Georgia Southern','Georgia State','Georgia Tech','Gonzaga','Grambling State','Grand Canyon','Green Bay','Hampton','Harvard','Hawaii','High Point','Hofstra','Holy Cross','Houston','Houston Christian','Howard','Idaho','Idaho State','Illinois','Illinois State','Incarnate Word','Indiana','Indiana State','Iona','Iowa','Iowa State','Jackson State','Jacksonville','Jacksonville State','James Madison','Kansas','Kansas City','Kansas State','Kennesaw State','Kent State','Kentucky','La Salle','Lafayette','Lamar','Lehigh','Liberty','Lipscomb','Little Rock','Long Beach State','Long Island','Longwood','Louisiana','Louisiana Tech','Louisville','Loyola Chicago','Loyola Maryland','LSU','Maine','Manhattan','Marist','Marquette','Marshall','Maryland','Maryland Eastern Shore','Massachusetts','McNeese','Memphis','Mercer','Merrimack','Miami','Miami (OH)','Michigan','Michigan State','Middle Tennessee','Milwaukee','Minnesota','Mississippi State','Mississippi Valley State','Missouri','Missouri State','Monmouth','Montana','Montana State','Morehead State','Morgan State','Mount St. Mary’s','Murray State','Navy','NC State','Nebraska','Nevada','New Hampshire','New Mexico','New Mexico State','New Orleans','Niagara','Nicholls','NJIT','Norfolk State','North Alabama','North Carolina','North Carolina A&T','North Carolina Central','North Dakota','North Dakota State','North Florida','North Texas','Northeastern','Northern Arizona','Northern Colorado','Northern Illinois','Northern Iowa','Northwestern','Northwestern State','Notre Dame','Oakland','Ohio','Ohio State','Oklahoma','Oklahoma State','Old Dominion','Ole Miss','Omaha','Oral Roberts','Oregon','Oregon State','Pacific','Penn','Penn State','Pepperdine','Pittsburgh','Portland','Portland State','Prairie View A&M','Presbyterian','Princeton','Providence','Purdue','Queens','Quinnipiac','Radford','Rhode Island','Rice','Richmond','Rider','Robert Morris','Rutgers','Sacramento State','Sacred Heart','Saint Francis','Saint Joseph’s','Saint Louis','Saint Mary’s','Saint Peter’s','Sam Houston','Samford','San Diego','San Diego State','San Francisco','San Jose State','Santa Clara','Seattle','Seton Hall','Siena','South Alabama','South Carolina','South Carolina State','South Dakota','South Dakota State','South Florida','Southeast Missouri State','Southeastern Louisiana','Southern','Southern Illinois','Southern Indiana','Southern Miss','Southern Utah','St. Bonaventure','St. John’s','Stanford','Stephen F. Austin','Stetson','Stonehill','Syracuse','Tarleton State','TCU','Temple','Tennessee','Tennessee State','Tennessee Tech','Texas','Texas A&M','Texas A&M-Commerce','Texas Southern','Texas State','Texas Tech','Toledo','Towson','Troy','Tulane','Tulsa','UAB','UC Davis','UC Irvine','UC Riverside','UC San Diego','UC Santa Barbara','UCF','UCLA','UConn','UIC','UL Monroe','UMass Lowell','UMBC','UNC Asheville','UNC Greensboro','UNC Wilmington','UNLV','USC','UT Arlington','UT Martin','UT Rio Grande Valley','UTEP','Utah','Utah State','Utah Tech','Utah Valley','UTSA','Valparaiso','Vanderbilt','Vermont','Villanova','Virginia','Virginia Tech','VMI','Wagner','Wake Forest','Washington','Washington State','Weber State','West Virginia','Western Carolina','Western Illinois','Western Kentucky','Western Michigan','Wichita State','William & Mary','Winthrop','Wisconsin','Wofford','Wright State','Wyoming','Xavier','Yale','Youngstown State'
-    ];
-    let bracketSize = 8;
-    let bracketTeams = [];
-    let bracketRounds = [];
-    let bracketPicks = {};
+    const ncaaTeams = ['Abilene Christian','Air Force','Akron','Alabama','Alabama A&M','Alabama State','Albany','Alcorn State','American','Appalachian State','Arizona','Arizona State','Arkansas','Arkansas State','Army','Auburn','Austin Peay','Ball State','Baylor','Belmont','Binghamton','Boise State','Boston College','Boston University','Bowling Green','Bradley','Brown','Bryant','Bucknell','Buffalo','Butler','BYU','California','Campbell','Canisius','Central Arkansas','Central Michigan','Charleston','Charlotte','Chattanooga','Chicago State','Cincinnati','Clemson','Cleveland State','Colgate','Colorado','Colorado State','Columbia','Cornell','Creighton','Dartmouth','Davidson','Dayton','Delaware','Denver','DePaul','Detroit Mercy','Drake','Drexel','Duke','Duquesne','East Carolina','Eastern Illinois','Eastern Kentucky','Eastern Michigan','Eastern Washington','Elon','Evansville','Fairfield','FIU','Florida','Florida Atlantic','Florida Gulf Coast','Florida State','Fordham','Fresno State','Furman','George Mason','Georgetown','Georgia','Georgia Southern','Georgia State','Georgia Tech','Gonzaga','Grand Canyon','Green Bay','Hampton','Harvard','Hawaii','High Point','Hofstra','Holy Cross','Houston','Houston Christian','Howard','Idaho','Illinois','Illinois State','Indiana','Indiana State','Iona','Iowa','Iowa State','Jackson State','Jacksonville','James Madison','Kansas','Kansas State','Kennesaw State','Kent State','Kentucky','La Salle','Lafayette','Lamar','Lehigh','Liberty','Lipscomb','Little Rock','Long Beach State','Long Island','Longwood','Louisiana','Louisiana Tech','Louisville','Loyola Chicago','LSU','Maine','Manhattan','Marist','Marquette','Marshall','Maryland','Massachusetts','McNeese','Memphis','Mercer','Miami','Miami (OH)','Michigan','Michigan State','Middle Tennessee','Milwaukee','Minnesota','Mississippi State','Missouri','Missouri State','Monmouth','Montana','Montana State','Morehead State','Morgan State','Murray State','Navy','NC State','Nebraska','Nevada','New Hampshire','New Mexico','New Mexico State','New Orleans','Niagara','NJIT','Norfolk State','North Alabama','North Carolina','North Dakota','North Dakota State','North Florida','North Texas','Northeastern','Northern Arizona','Northern Colorado','Northern Illinois','Northern Iowa','Northwestern','Notre Dame','Oakland','Ohio','Ohio State','Oklahoma','Oklahoma State','Old Dominion','Ole Miss','Omaha','Oral Roberts','Oregon','Oregon State','Pacific','Penn','Penn State','Pepperdine','Pittsburgh','Portland','Princeton','Providence','Purdue','Quinnipiac','Radford','Rhode Island','Rice','Richmond','Rider','Robert Morris','Rutgers','Sacramento State','Saint Joseph’s','Saint Louis','Saint Mary’s','Saint Peter’s','Sam Houston','Samford','San Diego','San Diego State','San Francisco','San Jose State','Santa Clara','Seattle','Seton Hall','Siena','South Alabama','South Carolina','South Dakota','South Dakota State','South Florida','Southern','Southern Illinois','Southern Miss','Southern Utah','St. Bonaventure','St. John’s','Stanford','Stephen F. Austin','Stetson','Syracuse','TCU','Temple','Tennessee','Tennessee State','Texas','Texas A&M','Texas Southern','Texas State','Texas Tech','Toledo','Towson','Troy','Tulane','Tulsa','UAB','UC Davis','UC Irvine','UC Riverside','UC San Diego','UC Santa Barbara','UCF','UCLA','UConn','UIC','UL Monroe','UMass Lowell','UMBC','UNC Asheville','UNC Greensboro','UNC Wilmington','UNLV','USC','UT Arlington','UT Martin','UT Rio Grande Valley','UTEP','Utah','Utah State','Utah Valley','UTSA','Valparaiso','Vanderbilt','Vermont','Villanova','Virginia','Virginia Tech','VMI','Wagner','Wake Forest','Washington','Washington State','Weber State','West Virginia','Western Kentucky','Wichita State','William & Mary','Winthrop','Wisconsin','Wofford','Wright State','Wyoming','Xavier','Yale','Youngstown State'];
 
     const starterRecords = [
-      { id: 1, year: '2067', era: 'Global Era', teamCount: '16 Team', champion: '7 Miami', runnerUp: '8 Texas', mvp: '7 Miami', smvp: '5 Great Britain', tmvp: '8 Texas', dmvp: '3 Duke', cmvp: '7 Miami', notes: 'Miami wins the first CCBA title of the Global Era.', image: null },
-      { id: 2, year: '2068', era: 'Global Era', teamCount: '16 Team', champion: '5 UCLA', runnerUp: '3 Texas', mvp: 'UCLA', smvp: 'UCLA', tmvp: 'Texas', dmvp: 'Texas', cmvp: 'UCLA', notes: 'UCLA wins Championship, MVP, SMVP, and CMVP in the same bracket.', image: null }
+      { id: 1, year: '2067', era: 'Global Era', teamCount: '16 Team', champion: '7 Miami', runnerUp: '8 Texas', mvp: '7 Miami', smvp: '5 Great Britain', tmvp: '8 Texas', dmvp: '3 Duke', cmvp: '7 Miami', notes: 'Miami wins the first CCBA title of the Global Era.' },
+      { id: 2, year: '2068', era: 'Global Era', teamCount: '16 Team', champion: '5 UCLA', runnerUp: '3 Texas', mvp: 'UCLA', smvp: 'UCLA', tmvp: 'Texas', dmvp: 'Texas', cmvp: 'UCLA', notes: 'UCLA wins Championship, MVP, SMVP, and CMVP in the same bracket.' }
     ];
-    let records = JSON.parse(localStorage.getItem('ccbaRecords') || 'null') || starterRecords;
-    let editingId = null;
-    let currentPhoto = null;
 
     const ids = ['year','era','teamCount','champion','runnerUp','mvp','smvp','tmvp','dmvp','cmvp','notes'];
     const $ = id => document.getElementById(id);
+    let records = loadRecords();
+    let editingId = null;
+    let bracketSize = 8;
+    let bracketRounds = [];
+    let bracketPicks = {};
 
-    window.showPage = function(page){
+    function loadRecords(){
+      const saved = JSON.parse(localStorage.getItem('ccbaRecords') || 'null') || starterRecords;
+      return saved.map(record => {
+        const cleaned = { ...record };
+        delete cleaned.image;
+        return cleaned;
+      });
+    }
+
+    function saveLocal(){
+      records = records.map(record => {
+        const cleaned = { ...record };
+        delete cleaned.image;
+        return cleaned;
+      });
+      localStorage.setItem('ccbaRecords', JSON.stringify(records));
+    }
+
+    function cleanTeamName(name){
+      return String(name || '').trim().replace(/^\d+\s+/, '').replace(/\s+/g, ' ');
+    }
+
+    function showPage(page){
       $('homePage').classList.toggle('active', page === 'home');
       $('bracketPage').classList.toggle('active', page === 'bracket');
       $('homeTab').classList.toggle('active', page === 'home');
       $('bracketTab').classList.toggle('active', page === 'bracket');
     }
 
-    window.toggleSection = function(id){
+    function toggleSection(id){
       const section = $(id);
-      if(section) section.classList.toggle('open');
+      if(!section) return;
+      const shouldOpen = !section.classList.contains('open');
+      document.querySelectorAll('#homePage .dropdown-card').forEach(card => card.classList.remove('open'));
+      if(shouldOpen) section.classList.add('open');
     }
 
-    window.chooseBracketSize = function(size){
+    function getForm(){
+      const obj = {};
+      ids.forEach(id => obj[id] = $(id).value.trim());
+      return obj;
+    }
+
+    function setForm(record){
+      ids.forEach(id => $(id).value = record[id] || '');
+    }
+
+    function clearForm(){
+      setForm({ year:'2069', era:'Global Era', teamCount:'16 Team' });
+      editingId = null;
+      $('saveBtn').textContent = '➕ Add Season';
+    }
+
+    function countField(field){
+      const counts = {};
+      records.forEach(record => {
+        const value = cleanTeamName(record[field]);
+        if(value) counts[value] = (counts[value] || 0) + 1;
+      });
+      return Object.entries(counts).sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    }
+
+    function renderLeaders(targetId, entries, label){
+      $(targetId).innerHTML = entries.length ? entries.map(([team,total],index) => `<div class="leader"><span class="rank">${index + 1}</span><strong>${team}</strong><b>${total} ${label}${total === 1 ? '' : 's'}</b></div>`).join('') : '<p>No data yet.</p>';
+    }
+
+    function render(){
+      const query = $('search').value.toLowerCase().trim();
+      const filtered = records
+        .filter(record => !query || Object.values(record).some(value => String(value ?? '').toLowerCase().includes(query)))
+        .sort((a,b) => Number(a.year) - Number(b.year));
+
+      const champs = countField('champion');
+      $('seasonCount').textContent = records.length;
+      $('champCount').textContent = champs.length;
+
+      $('records').innerHTML = filtered.length ? filtered.map(record => `
+        <article class="record-row" id="record-${record.id}">
+          <button class="record-summary" onclick="toggleRecord(${record.id})"><span>${record.year}</span><span>▼</span></button>
+          <div class="record-details">
+            <b>Era:</b> ${record.era || '—'}<br>
+            <b>Champion:</b> ${record.champion || '—'}<br>
+            <b>Runner-Up:</b> ${record.runnerUp || '—'}
+            <div class="award-grid">
+              <div><b>MVP:</b> ${record.mvp || '—'}</div>
+              <div><b>SMVP:</b> ${record.smvp || '—'}</div>
+              <div><b>TMVP:</b> ${record.tmvp || '—'}</div>
+              <div><b>DMVP:</b> ${record.dmvp || '—'}</div>
+              <div><b>CMVP:</b> ${record.cmvp || '—'}</div>
+              <div><b>Teams:</b> ${record.teamCount || '—'}</div>
+            </div>
+            <div class="storyline"><b>Storyline:</b> ${record.notes || 'No storyline yet.'}</div>
+            <div class="actions" style="margin-top:12px;"><button onclick="editRecord(${record.id})">✏️ Edit</button><button onclick="deleteRecord(${record.id})">🗑️ Delete</button></div>
+          </div>
+        </article>`).join('') : '<div class="empty-state">No seasons match your search.</div>';
+
+      renderLeaders('leaders', champs, 'title');
+      renderLeaders('runnerUpLeaders', countField('runnerUp'), 'runner-up finish');
+      renderLeaders('mvpLeaders', countField('mvp'), 'MVP');
+      renderLeaders('smvpLeaders', countField('smvp'), 'SMVP');
+      renderLeaders('tmvpLeaders', countField('tmvp'), 'TMVP');
+      renderLeaders('dmvpLeaders', countField('dmvp'), 'DMVP');
+      renderLeaders('cmvpLeaders', countField('cmvp'), 'CMVP');
+    }
+
+    function toggleRecord(id){
+      const row = $('record-' + id);
+      if(row) row.classList.toggle('open');
+    }
+
+    function editRecord(id){
+      const record = records.find(r => r.id === id);
+      if(!record) return;
+      editingId = id;
+      setForm(record);
+      $('saveBtn').textContent = '💾 Save Changes';
+      toggleSection('championshipInputSection');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function deleteRecord(id){
+      records = records.filter(record => record.id !== id);
+      saveLocal();
+      render();
+    }
+
+    function chooseBracketSize(size){
       bracketSize = size;
       [8,16,64].forEach(n => $('size' + n).classList.toggle('active', n === size));
-      $('manualArea').style.display = 'none';
-      $('bracketBoard').innerHTML = '';
+      clearBracket();
     }
 
     function randomNumber(){
@@ -300,44 +361,38 @@
     }
 
     function makeSeededBracket(names){
-      const seedOrder = getSeedOrder(bracketSize);
-      return seedOrder.map((slot, index) => ({
-        id: `${slot.region}-${slot.seed}-${index}`,
+      return getSeedOrder(bracketSize).map((slot, index) => ({
+        id: `${slot.region}-${slot.seed}-${index}-${names[index]}`,
         seed: slot.seed,
         region: slot.region,
         name: names[index] || `Team ${index + 1}`
       }));
     }
 
-    window.autoFillBracket = function(){
-      const names = shuffleTeams(ncaaTeams).slice(0, bracketSize);
-      bracketTeams = makeSeededBracket(names);
-      createBracket(bracketTeams);
+    function autoFillBracket(){
+      createBracket(makeSeededBracket(shuffleTeams(ncaaTeams).slice(0, bracketSize)));
     }
 
-    window.showManualFill = function(){
+    function showManualFill(){
       $('manualArea').style.display = 'block';
       const seedOrder = getSeedOrder(bracketSize);
-      $('manualInputs').innerHTML = seedOrder.map((slot, i) => `<input id="manualTeam${i}" placeholder="${bracketSize === 64 ? 'Region ' + slot.region + ' - ' : ''}Seed ${slot.seed} team name">`).join('');
+      $('manualInputs').innerHTML = seedOrder.map((slot, index) => `<input id="manualTeam${index}" placeholder="${bracketSize === 64 ? 'Region ' + slot.region + ' - ' : ''}Seed ${slot.seed} team name">`).join('');
     }
 
-    window.buildManualBracket = function(){
-      const names = Array.from({length: bracketSize}, (_, i) => $('manualTeam' + i).value.trim() || `Team ${i + 1}`);
-      bracketTeams = makeSeededBracket(names);
-      createBracket(bracketTeams);
+    function buildManualBracket(){
+      const names = Array.from({length: bracketSize}, (_, index) => $('manualTeam' + index).value.trim() || `Team ${index + 1}`);
+      createBracket(makeSeededBracket(names));
     }
 
-    window.clearBracket = function(){
-      bracketTeams = [];
+    function clearBracket(){
       bracketRounds = [];
       bracketPicks = {};
       $('bracketBoard').innerHTML = '';
       $('manualArea').style.display = 'none';
     }
 
-    function roundName(roundIndex, totalRounds){
+    function roundName(roundIndex){
       const teamCount = bracketRounds[roundIndex].length;
-      if(roundIndex === totalRounds - 1) return 'Champion';
       if(teamCount === 2) return 'Championship';
       if(teamCount === 4) return 'Final Four';
       if(teamCount === 8) return 'Elite Eight';
@@ -352,184 +407,59 @@
       bracketRounds = [teams];
       let count = teams.length / 2;
       while(count >= 1){
-        bracketRounds.push(Array(count).fill(''));
-        count = count / 2;
+        bracketRounds.push(Array(count).fill(null));
+        count /= 2;
       }
       renderBracket();
     }
 
-    window.pickWinner = function(roundIndex, matchIndex, slotIndex){
+    function pickWinner(roundIndex, matchIndex, slotIndex){
       const team = bracketRounds[roundIndex][slotIndex];
-      if(!team || !team.name) return;
-      if(!bracketRounds[roundIndex + 1]) return;
+      if(!team || !team.name || !bracketRounds[roundIndex + 1]) return;
       bracketPicks[roundIndex + '-' + matchIndex] = team;
       bracketRounds[roundIndex + 1][matchIndex] = team;
-      for(let r = roundIndex + 2; r < bracketRounds.length; r++){
-        bracketRounds[r] = bracketRounds[r].map(() => '');
-      }
-      Object.keys(bracketPicks).forEach(key => {
-        const [r] = key.split('-').map(Number);
-        if(r > roundIndex) delete bracketPicks[key];
-      });
+      for(let r = roundIndex + 2; r < bracketRounds.length; r++) bracketRounds[r] = bracketRounds[r].map(() => null);
+      Object.keys(bracketPicks).forEach(key => { if(Number(key.split('-')[0]) > roundIndex) delete bracketPicks[key]; });
       renderBracket();
     }
 
     function displayTeam(team){
-      if(!team) return 'TBD';
-      return `<span class="seed-badge">${team.seed}</span><span>${team.name}</span>`;
+      return team ? `<span class="seed-badge">${team.seed}</span><span>${team.name}</span>` : 'TBD';
     }
 
-    function sameTeam(a, b){
-      return a && b && a.id === b.id;
-    }
+    function sameTeam(a,b){ return a && b && a.id === b.id; }
 
     function renderBracket(){
-      const totalRounds = bracketRounds.length;
       $('bracketBoard').innerHTML = `<div class="bracket-rounds">${bracketRounds.map((round, roundIndex) => {
-        const isFinalWinner = roundIndex === totalRounds - 1;
-        return `<div class="bracket-round"><h3>${isFinalWinner ? 'Champion' : roundName(roundIndex, totalRounds)}</h3>${isFinalWinner ? `<div class="matchup"><div class="team-slot winner-slot">${round[0] ? displayTeam(round[0]) : 'Winner'}</div></div>` : Array.from({length: round.length / 2}, (_, matchIndex) => {
+        const isChampionColumn = roundIndex === bracketRounds.length - 1;
+        if(isChampionColumn) return `<div class="bracket-round"><h3>Champion</h3><div class="matchup"><div class="team-slot winner-slot">${displayTeam(round[0])}</div></div></div>`;
+        return `<div class="bracket-round"><h3>${roundName(roundIndex)}</h3>${Array.from({length: round.length / 2}, (_, matchIndex) => {
           const slotA = matchIndex * 2;
           const slotB = matchIndex * 2 + 1;
           const teamA = round[slotA];
           const teamB = round[slotB];
-          const picked = bracketPicks[roundIndex + '-' + matchIndex] || null;
-          const teamAClass = sameTeam(picked, teamA) ? 'team-win' : picked && teamA ? 'team-loss' : '';
-          const teamBClass = sameTeam(picked, teamB) ? 'team-win' : picked && teamB ? 'team-loss' : '';
-          return `<div class="matchup"><div class="team-slot ${teamAClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, ${slotA})">${teamA ? displayTeam(teamA) : 'TBD'}</div><div class="team-slot ${teamBClass}" onclick="pickWinner(${roundIndex}, ${matchIndex}, ${slotB})">${teamB ? displayTeam(teamB) : 'TBD'}</div></div>`;
+          const picked = bracketPicks[roundIndex + '-' + matchIndex];
+          const classA = sameTeam(picked, teamA) ? 'team-win' : picked && teamA ? 'team-loss' : '';
+          const classB = sameTeam(picked, teamB) ? 'team-win' : picked && teamB ? 'team-loss' : '';
+          return `<div class="matchup"><div class="team-slot ${classA}" onclick="pickWinner(${roundIndex}, ${matchIndex}, ${slotA})">${displayTeam(teamA)}</div><div class="team-slot ${classB}" onclick="pickWinner(${roundIndex}, ${matchIndex}, ${slotB})">${displayTeam(teamB)}</div></div>`;
         }).join('')}</div>`;
       }).join('')}</div>`;
     }
 
-    function stripImages(){
-      records = records.map(r => ({ ...r, image: null }));
-      currentPhoto = null;
-      $('previewBox').style.display = 'none';
-    }
-
-    function saveLocal(){
-      try {
-        localStorage.setItem('ccbaRecords', JSON.stringify(records));
-      } catch (e) {
-        stripImages();
-        try {
-          localStorage.setItem('ccbaRecords', JSON.stringify(records));
-          alert('Photos were removed automatically to free up storage.');
-          render();
-        } catch(err){
-          alert('Storage is still full. Try clearing Safari browser data.');
-        }
-      }
-    }
-    function getForm(){ const obj = {}; ids.forEach(id => obj[id] = $(id).value); obj.image = currentPhoto; return obj; }
-    function setForm(r){ ids.forEach(id => $(id).value = r[id] || ''); currentPhoto = r.image || null; $('previewBox').style.display = currentPhoto ? 'block' : 'none'; if(currentPhoto) $('photoPreview').src = currentPhoto; $('photoName').textContent = currentPhoto ? 'Saved bracket photo' : ''; }
-    function clearForm(){ setForm({year:'2069', era:'Global Era', teamCount:'16 Team'}); editingId = null; $('saveBtn').textContent = '➕ Add Season'; }
-
-    function countField(field){
-      const counts = {};
-      records.forEach(r => {
-        const value = cleanTeamName(r[field]);
-        if(value) counts[value] = (counts[value] || 0) + 1;
-      });
-      return Object.entries(counts).sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0]));
-    }
-
-    function renderLeaders(targetId, entries, label){
-      $(targetId).innerHTML = entries.length ? entries.map(([team,total],i)=>`<div class="leader"><span class="rank">${i+1}</span><strong>${team}</strong><b>${total} ${label}${total===1?'':'s'}</b></div>`).join('') : '<p>No data yet.</p>';
-    }
-
-    function render(){
-      const q = $('search').value.toLowerCase().trim();
-      const filtered = records
-        .filter(r => !q || Object.values(r).some(v => String(v ?? '').toLowerCase().includes(q)))
-        .sort((a, b) => Number(a.year) - Number(b.year));
-      $('seasonCount').textContent = records.length;
-      const champCounts = {};
-    function cleanTeamName(name){
-  return String(name || '').trim().replace(/^\d+\s+/, '').replace(/\s+/g, ' ');
-}
-
-records.forEach(r => {
-  const team = cleanTeamName(r.champion);
-  if(team) champCounts[team] = (champCounts[team] || 0) + 1;
-});
-
-      const champs = Object.entries(champCounts).sort((a,b)=>b[1]-a[1]);
-      $('champCount').textContent = champs.length;
-
-      $('records').innerHTML = filtered.length ? filtered.map(r => `
-        <article class="record-row" id="record-${r.id}">
-          <button class="record-summary" onclick="toggleRecord(${r.id})">
-            <span class="record-year">${r.year}</span>
-            <span class="record-arrow">▼</span>
-          </button>
-          <div class="record-details">
-            <b>Era:</b> ${r.era || '—'}<br>
-            <b>Champion:</b> ${r.champion || '—'}<br>
-            <b>Runner-Up:</b> ${r.runnerUp || '—'}
-            <div class="award-grid">
-              <div><b>MVP:</b> ${r.mvp || '—'}</div>
-              <div><b>SMVP:</b> ${r.smvp || '—'}</div>
-              <div><b>TMVP:</b> ${r.tmvp || '—'}</div>
-              <div><b>DMVP:</b> ${r.dmvp || '—'}</div>
-              <div><b>CMVP:</b> ${r.cmvp || '—'}</div>
-              <div><b>Teams:</b> ${r.teamCount || '—'}</div>
-            </div>
-            <div class="storyline"><b>Storyline:</b> ${r.notes || 'No storyline yet.'}</div>
-            ${r.image ? `<img class="record-image" src="${r.image}" alt="${r.year} bracket">` : ''}
-            <div class="actions" style="margin-top:12px;"><button onclick="editRecord(${r.id})">✏️ Edit</button><button onclick="deleteRecord(${r.id})">🗑️ Delete</button></div>
-          </div>
-        </article>`).join('') : '<div class="empty-state">No seasons match your search.</div>';
-
-      renderLeaders('leaders', champs, 'title');
-      renderLeaders('runnerUpLeaders', countField('runnerUp'), 'runner-up finish');
-      renderLeaders('mvpLeaders', countField('mvp'), 'MVP');
-      renderLeaders('smvpLeaders', countField('smvp'), 'SMVP');
-      renderLeaders('tmvpLeaders', countField('tmvp'), 'TMVP');
-      renderLeaders('dmvpLeaders', countField('dmvp'), 'DMVP');
-      renderLeaders('cmvpLeaders', countField('cmvp'), 'CMVP');
-    }
-
-    window.toggleRecord = function(id){
-      const row = document.getElementById('record-' + id);
-      if(row) row.classList.toggle('open');
-    }
-
-    window.editRecord = function(id){ const r = records.find(x => x.id === id); if(!r) return; editingId = id; setForm(r); $('saveBtn').textContent = '💾 Save Changes'; window.scrollTo({top:0, behavior:'smooth'}); }
-    window.deleteRecord = function(id){ records = records.filter(r => r.id !== id); saveLocal(); render(); }
-
-    $('photoInput').addEventListener('change', e => {
-      const file = e.target.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const maxWidth = 800;
-          const scale = Math.min(1, maxWidth / img.width);
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          currentPhoto = canvas.toDataURL('image/jpeg', 0.6);
-          $('photoName').textContent = file.name;
-          $('photoPreview').src = currentPhoto;
-          $('previewBox').style.display = 'block';
-        };
-        img.src = reader.result;
-      };
-      reader.readAsDataURL(file);
-    });
     $('saveBtn').addEventListener('click', () => {
       const season = getForm();
-      if(!season.year.trim() || !season.champion.trim()) { alert('Add at least a year and champion first.'); return; }
-      if(editingId) records = records.map(r => r.id === editingId ? {...season, id: editingId} : r);
-      else records.push({...season, id: Date.now()});
-      records.sort((a, b) => Number(a.year) - Number(b.year));
-      saveLocal(); clearForm(); render();
+      if(!season.year || !season.champion){ alert('Add at least a year and champion first.'); return; }
+      if(editingId) records = records.map(record => record.id === editingId ? { ...season, id: editingId } : record);
+      else records.push({ ...season, id: Date.now() });
+      records.sort((a,b) => Number(a.year) - Number(b.year));
+      saveLocal();
+      clearForm();
+      render();
     });
+
     $('clearBtn').addEventListener('click', clearForm);
     $('search').addEventListener('input', render);
+    saveLocal();
     render();
   </script>
 </body>
