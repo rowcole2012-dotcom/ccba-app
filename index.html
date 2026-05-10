@@ -129,7 +129,7 @@
           <label class="upload-box">
             <span class="upload-icon">📸</span>
             <strong>Upload a bracket or winners photo</strong>
-            <small>PNG, JPG, or screenshot</small>
+            <small>PNG, JPG, or screenshot (photos auto-remove if storage gets full)</small>
             <input id="photoInput" type="file" accept="image/*" />
           </label>
           <div id="previewBox" class="preview-box" style="display:none;"><p id="photoName"></p><img id="photoPreview" alt="Uploaded bracket preview" /></div>
@@ -336,10 +336,14 @@
     }
 
     function roundName(roundIndex, totalRounds){
-      if(roundIndex === totalRounds - 1) return 'Championship';
-      if(roundIndex === totalRounds - 2) return 'Final Four';
-      if(roundIndex === totalRounds - 3) return 'Elite Eight';
-      if(roundIndex === totalRounds - 4) return 'Sweet 16';
+      const teamCount = bracketRounds[roundIndex].length;
+      if(roundIndex === totalRounds - 1) return 'Champion';
+      if(teamCount === 2) return 'Championship';
+      if(teamCount === 4) return 'Final Four';
+      if(teamCount === 8) return 'Elite Eight';
+      if(teamCount === 16) return 'Sweet 16';
+      if(teamCount === 32) return 'Round of 32';
+      if(teamCount === 64) return 'Round of 64';
       return 'Round ' + (roundIndex + 1);
     }
 
@@ -396,11 +400,24 @@
       }).join('')}</div>`;
     }
 
+    function stripImages(){
+      records = records.map(r => ({ ...r, image: null }));
+      currentPhoto = null;
+      $('previewBox').style.display = 'none';
+    }
+
     function saveLocal(){
       try {
         localStorage.setItem('ccbaRecords', JSON.stringify(records));
       } catch (e) {
-        alert('Storage is full. Try deleting some old photos or using smaller images.');
+        stripImages();
+        try {
+          localStorage.setItem('ccbaRecords', JSON.stringify(records));
+          alert('Photos were removed automatically to free up storage.');
+          render();
+        } catch(err){
+          alert('Storage is still full. Try clearing Safari browser data.');
+        }
       }
     }
     function getForm(){ const obj = {}; ids.forEach(id => obj[id] = $(id).value); obj.image = currentPhoto; return obj; }
