@@ -214,6 +214,7 @@
     let bracketSize = 8;
     let bracketRounds = [];
     let bracketPicks = {};
+    let editingHistoricalId = null;
 
     function loadRecords(){
       const saved = JSON.parse(localStorage.getItem('ccbaRecords') || 'null') || starterRecords;
@@ -259,7 +260,7 @@
             <b>Era:</b> ${record.era || '—'}<br><b>Champion:</b> ${record.champion || '—'}<br><b>Runner-Up:</b> ${record.runnerUp || '—'}
             <div class="award-grid"><div><b>MVP:</b> ${record.mvp || '—'}</div><div><b>SMVP:</b> ${record.smvp || '—'}</div><div><b>TMVP:</b> ${record.tmvp || '—'}</div><div><b>DMVP:</b> ${record.dmvp || '—'}</div><div><b>CMVP:</b> ${record.cmvp || '—'}</div><div><b>Teams:</b> ${record.teamCount || '—'}</div></div>
             <div class="storyline"><b>Storyline:</b> ${record.notes || 'No storyline yet.'}</div>
-            <div class="actions" style="margin-top:12px;"><button onclick="deleteRecord(${record.id})">🗑️ Delete</button></div>
+            <div class="actions" style="margin-top:12px;"><button onclick="editRecord(${record.id})">✏️ Edit</button><button onclick="deleteRecord(${record.id})">🗑️ Delete</button></div>
           </div>
         </article>`).join('') : '<div class="empty-state">No seasons match your search.</div>';
       renderLeaders('leaders', champs, 'title');
@@ -271,6 +272,18 @@
       renderLeaders('cmvpLeaders', countField('cmvp'), 'CMVP');
     }
     function toggleRecord(id){ const row = $('record-' + id); if(row) row.classList.toggle('open'); }
+    function editRecord(id){
+      const record = records.find(item => item.id === id);
+      if(!record) return;
+      editingHistoricalId = id;
+      ['year','era','teamCount','champion','runnerUp','mvp','smvp','tmvp','dmvp','cmvp','notes'].forEach(field => $('h-' + field).value = record[field] || '');
+      showPage('historical');
+      $('historicalInputSection').classList.add('open');
+      const saveButton = document.querySelector('#historicalInputSection .primary-button');
+      if(saveButton) saveButton.textContent = '💾 Save Changes';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     function deleteRecord(id){ records = records.filter(record => record.id !== id); saveLocal(); render(); prepBracketForm(); prepHistoricalForm(); }
 
     function getBracketTeams(){ return bracketRounds[0] ? bracketRounds[0].map(t => t.name) : []; }
@@ -311,11 +324,23 @@
     }
 
     function prepHistoricalForm(){ $('h-year').value = $('h-year').value || nextYear(); }
-    function clearHistoricalForm(){ ['year','era','teamCount','champion','runnerUp','mvp','smvp','tmvp','dmvp','cmvp','notes'].forEach(field => $('h-' + field).value = ''); $('h-year').value = nextYear(); }
+    function clearHistoricalForm(){
+      ['year','era','teamCount','champion','runnerUp','mvp','smvp','tmvp','dmvp','cmvp','notes'].forEach(field => $('h-' + field).value = '');
+      $('h-year').value = nextYear();
+      editingHistoricalId = null;
+      const saveButton = document.querySelector('#historicalInputSection .primary-button');
+      if(saveButton) saveButton.textContent = '➕ Add Historical Season';
+    }
     function saveHistoricalSeason(){
       const record = { id: Date.now(), year:$('h-year').value, era:$('h-era').value, teamCount:$('h-teamCount').value, champion:$('h-champion').value, runnerUp:$('h-runnerUp').value, mvp:$('h-mvp').value, smvp:$('h-smvp').value, tmvp:$('h-tmvp').value, dmvp:$('h-dmvp').value, cmvp:$('h-cmvp').value, notes:$('h-notes').value };
       if(!record.year || !record.champion){ alert('Add at least a year and champion first.'); return; }
-      records.push(record); records.sort((a,b) => Number(a.year) - Number(b.year)); saveLocal(); render(); clearHistoricalForm(); alert('Historical season added.');
+      if(editingHistoricalId){
+        records = records.map(item => item.id === editingHistoricalId ? { ...record, id: editingHistoricalId } : item);
+      } else {
+        records.push(record);
+      }
+      records.sort((a,b) => Number(a.year) - Number(b.year));
+      saveLocal(); render(); clearHistoricalForm(); alert(editingHistoricalId ? 'Season updated.' : 'Historical season added.');
     }
 
     function chooseBracketSize(size){ bracketSize = size; [8,16,64].forEach(n => $('size' + n).classList.toggle('active', n === size)); clearBracket(); prepBracketForm(); }
