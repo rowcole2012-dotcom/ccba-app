@@ -31,7 +31,7 @@
     .dropdown-header:hover { background:#f8fafc; }
     .dropdown-header span:first-child { display:flex; align-items:center; gap:10px; font-size:22px; }
     .dropdown-content { display:none; padding:0 16px 16px; }
-    .dropdown-card.open .dropdown-content { display:block; }
+    .dropdown-card.open > .dropdown-content { display:block; }
     .dropdown-arrow { color:#64748b; font-size:18px; }
     .note-box { background:#fffbeb; color:#92400e; border-radius:18px; padding:14px; font-size:14px; line-height:1.4; margin-bottom:14px; }
     .field-grid { display:grid; gap:12px; }
@@ -55,7 +55,7 @@
     .record-summary { width:100%; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:16px; background:white; border:0; cursor:pointer; text-align:left; font-size:18px; font-weight:900; color:#0f172a; }
     .record-summary:hover { background:#f8fafc; }
     .record-details { display:none; margin:0 14px 14px; background:#f8fafc; color:#475569; border-radius:14px; padding:14px; font-size:14px; line-height:1.6; }
-    .record-row.open .record-details { display:block; }
+    .record-row.open > .record-details { display:block; }
     .award-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:10px; }
     .award-grid div { background:white; border:1px solid #e2e8f0; border-radius:12px; padding:10px; }
     .storyline { margin-top:10px; background:white; border:1px solid #e2e8f0; border-radius:12px; padding:10px; }
@@ -123,11 +123,16 @@
         </div>
         <div class="card dropdown-card" id="championshipLeadersSection"><button class="dropdown-header" onclick="toggleSection('championshipLeadersSection')"><span>👑 Championship Leaders</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="leaders" class="leader-list"></div></div></div>
         <div class="card dropdown-card" id="runnerUpLeadersSection"><button class="dropdown-header" onclick="toggleSection('runnerUpLeadersSection')"><span>🥈 Runner-Up Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="runnerUpLeaders" class="leader-list"></div></div></div>
-        <div class="card dropdown-card" id="mvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('mvpLeadersSection')"><span>⭐ MVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="mvpLeaders" class="leader-list"></div></div></div>
-        <div class="card dropdown-card" id="smvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('smvpLeadersSection')"><span>🎯 SMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="smvpLeaders" class="leader-list"></div></div></div>
-        <div class="card dropdown-card" id="tmvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('tmvpLeadersSection')"><span>🦒 TMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="tmvpLeaders" class="leader-list"></div></div></div>
-        <div class="card dropdown-card" id="dmvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('dmvpLeadersSection')"><span>🛡️ DMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="dmvpLeaders" class="leader-list"></div></div></div>
-        <div class="card dropdown-card" id="cmvpLeadersSection"><button class="dropdown-header" onclick="toggleSection('cmvpLeadersSection')"><span>🔥 CMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="cmvpLeaders" class="leader-list"></div></div></div>
+        <div class="card dropdown-card" id="awardDatabaseSection">
+          <button class="dropdown-header" onclick="toggleSection('awardDatabaseSection')"><span>🏅 Award Database</span><span class="dropdown-arrow">▼</span></button>
+          <div class="dropdown-content">
+            <div class="card dropdown-card" id="mvpLeadersSection" style="margin-bottom:12px;"><button class="dropdown-header" onclick="toggleNestedSection(event, 'mvpLeadersSection')"><span>⭐ MVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="mvpLeaders" class="leader-list"></div></div></div>
+            <div class="card dropdown-card" id="smvpLeadersSection" style="margin-bottom:12px;"><button class="dropdown-header" onclick="toggleNestedSection(event, 'smvpLeadersSection')"><span>🎯 SMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="smvpLeaders" class="leader-list"></div></div></div>
+            <div class="card dropdown-card" id="tmvpLeadersSection" style="margin-bottom:12px;"><button class="dropdown-header" onclick="toggleNestedSection(event, 'tmvpLeadersSection')"><span>🦒 TMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="tmvpLeaders" class="leader-list"></div></div></div>
+            <div class="card dropdown-card" id="dmvpLeadersSection" style="margin-bottom:12px;"><button class="dropdown-header" onclick="toggleNestedSection(event, 'dmvpLeadersSection')"><span>🛡️ DMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="dmvpLeaders" class="leader-list"></div></div></div>
+            <div class="card dropdown-card" id="cmvpLeadersSection"><button class="dropdown-header" onclick="toggleNestedSection(event, 'cmvpLeadersSection')"><span>🔥 CMVP Database</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><div id="cmvpLeaders" class="leader-list"></div></div></div>
+          </div>
+        </div>
         <div class="card dropdown-card" id="rulesSection"><button class="dropdown-header" onclick="toggleSection('rulesSection')"><span>🏅 Official CCBA Rules</span><span class="dropdown-arrow">▼</span></button><div class="dropdown-content"><ul class="rules-list"><li><b>Era Rule:</b> Every era lasts 3 seasons.</li><li><b>Game Format:</b> All games are 1-v-1.</li><li><b>International Rule:</b> International teams play each other in the first round.</li><li><b>Eligibility:</b> Every player gets 4 years of eligibility.</li></ul></div></div>
       </section>
 
@@ -237,7 +242,17 @@
       const section = $(id); if(!section) return;
       const page = section.closest('.app-page');
       const shouldOpen = !section.classList.contains('open');
-      page.querySelectorAll('.dropdown-card').forEach(card => card.classList.remove('open'));
+      page.querySelectorAll(':scope > .dropdown-card').forEach(card => card.classList.remove('open'));
+      if(shouldOpen) section.classList.add('open');
+    }
+
+    function toggleNestedSection(event, id){
+      event.stopPropagation();
+      const section = $(id);
+      if(!section) return;
+      const parent = section.parentElement;
+      const shouldOpen = !section.classList.contains('open');
+      parent.querySelectorAll(':scope > .dropdown-card').forEach(card => card.classList.remove('open'));
       if(shouldOpen) section.classList.add('open');
     }
 
@@ -307,7 +322,11 @@
     }
     function toggleRecord(id){
       const row = typeof id === 'string' ? $(id) : $('record-' + id);
-      if(row) row.classList.toggle('open');
+      if(!row) return;
+      const parent = row.parentElement;
+      const shouldOpen = !row.classList.contains('open');
+      parent.querySelectorAll(':scope > .record-row').forEach(item => item.classList.remove('open'));
+      if(shouldOpen) row.classList.add('open');
     }
     function editRecord(id){
       const record = records.find(item => item.id === id);
